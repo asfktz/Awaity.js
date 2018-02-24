@@ -18,3 +18,13 @@ export function toBoolean(val) {
 export function identity(value) {
   return value;
 }
+
+export function defaults(obj, defaultObj) {
+  const initial = Object.assign({}, defaultObj);
+  return Object.keys(obj).reduce((results, key) => {
+    results[key] = (obj[key] === undefined) ? defaultObj[key] : obj[key];
+    return results;
+  }, initial);
+}
+
+export function noop() {}
