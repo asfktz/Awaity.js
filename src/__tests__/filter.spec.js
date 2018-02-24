@@ -1,7 +1,7 @@
 import filter from '../filter';
 import { wait, measureTime, around } from './utils';
 
-test.only('should limit concurrent promises to 2', async () => {
+test('should limit concurrent promises to 2', async () => {
   const iterable = [1, 2, 3, 4, 5, 6];
   const limit = 2;
   const duration = 100;

@@ -17,35 +17,35 @@ function run(...args) {
     .catch(onRejected);
 }
 
-export default function concurrent(iterable, limit, callbacks) {
-  return Promise.all(iterable).then((values) => {
-    return new Promise((resolve, reject) => {
-      let count = 0;
-      const iterator = values.entries();
-      const onRejected = reject;
+export default function concurrent(options) {
+  return values => new Promise((resolve, reject) => {
+    const limit = options.limit || values.length;
 
-      const transform = (value, key) => {
-        const callback = callbacks.transform || identity;
-        return Promise.resolve(callback(value, key, values));
-      };
+    let count = 0;
+    const iterator = values.entries();
+    const onRejected = reject;
 
-      const shouldStop = () => {
-        return callbacks.shouldStop(count, values);
-      };
+    const transform = (value, key) => {
+      const callback = options.transform || identity;
+      return Promise.resolve(callback(value, key, values));
+    };
 
-      const onResolved = (value, key) => {
-        return Promise.resolve()
-          .then(() => callbacks.onResolved(value, key, values))
-          .then(() => {
-            count += 1;
+    const shouldStop = () => {
+      return options.shouldStop(count, values);
+    };
 
-            if (shouldStop()) {
-              resolve();
-            }
-          });
-      };
+    const onResolved = (value, key) => {
+      return Promise.resolve()
+        .then(() => options.onResolved(value, key, values))
+        .then(() => {
+          count += 1;
 
-      repeat(limit, () => run(iterator, transform, shouldStop, onResolved, onRejected));
-    });
+          if (shouldStop()) {
+            resolve();
+          }
+        });
+    };
+
+    repeat(limit, () => run(iterator, transform, shouldStop, onResolved, onRejected));
   });
 }
