@@ -22,26 +22,34 @@ export default function concurrent(options) {
     const limit = options.limit || values.length;
 
     let count = 0;
+    let fulfilled = false;
+
     const iterator = values.entries();
+
+    const done = () => {
+      resolve();
+      fulfilled = true;
+    };
+
     const onRejected = reject;
+
+    const shouldStop = () => fulfilled || options.shouldStop(count, values);
 
     const transform = (value, key) => {
       const callback = options.transform || identity;
       return Promise.resolve(callback(value, key, values));
     };
 
-    const shouldStop = () => {
-      return options.shouldStop(count, values);
-    };
-
     const onResolved = (value, key) => {
-      return Promise.resolve()
-        .then(() => options.onResolved(value, key, values))
-        .then(() => {
-          count += 1;
+      if (fulfilled) { return Promise.resolve(); }
 
+      count += 1;
+
+      return Promise.resolve()
+        .then(() => options.onResolved(value, key, values, count))
+        .then(() => {
           if (shouldStop()) {
-            resolve();
+            done();
           }
         });
     };

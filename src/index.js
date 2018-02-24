@@ -6,6 +6,7 @@ import mapSeries from './mapSeries';
 import reduce from './reduce';
 import each from './each';
 import filter from './filter';
+import some from './some';
 
 export default {
   all,
@@ -16,7 +17,7 @@ export default {
   reduce,
   each,
   filter,
+  some,
 };
 
 export function any() {}
-export function some() {}

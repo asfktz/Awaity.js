@@ -16,5 +16,5 @@ test('should limit concurrent promises to 2', async () => {
     expect(results).toEqual([1, 2, 3]);
   });
 
-  expect(around(actualTime, expectedTime, 50)).toBe(true);
+  expect(around(actualTime, expectedTime, 60)).toBe(true);
 });
