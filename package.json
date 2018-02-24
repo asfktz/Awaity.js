@@ -25,5 +25,8 @@
     "presets": [
       "env"
     ]
+  },
+  "jest": {
+    "testPathIgnorePatterns": ["/__tests__/utils/", "/node_modules/"]
   }
 }

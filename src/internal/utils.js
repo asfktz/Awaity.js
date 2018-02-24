@@ -11,6 +11,10 @@ export function toArray(obj) {
   return Object.keys(obj).map(i => obj[i]);
 }
 
-export function invoke(fn) {
-  return fn();
+export function toBoolean(val) {
+  return !!val;
+}
+
+export function identity(value) {
+  return value;
 }
