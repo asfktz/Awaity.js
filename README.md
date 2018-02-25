@@ -9,7 +9,9 @@
 
 ----
 
-#### map
+#### map(iterable, mapper, { concurrency: Infinity })
+```js
+```
 
 ```js
 import { map } from 'littlebird';
@@ -51,7 +53,7 @@ const results = await reduceAsync(promises, async (count, num) => {
 }, 0);
 ```
 
-#### all
+#### all(Iterable<any>|Promise<Iterable<any>> input) -> Promise<Array<any>>
 
 ```js
 import { all } from 'littlebird';
@@ -61,7 +63,7 @@ const results = await all(promises);
 results // [...,...,...,...]
 ```
 
-#### props
+#### props(Object|Map|Promise<Object|Map> input) -> Promise
 
 ```js
 import { props } from 'littleBird';
