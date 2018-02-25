@@ -3,8 +3,8 @@ import { repeat, identity, defaults, noop } from './utils';
 function run(...args) {
   const [
     iterator,
+    isFulfilled,
     transform,
-    shouldStop,
     onResolved,
     onRejected,
     onCompleted,
@@ -12,7 +12,7 @@ function run(...args) {
 
   const iteration = iterator.next();
 
-  if (iteration.done || shouldStop()) return;
+  if (iteration.done || isFulfilled()) return;
 
   const [key, value] = iteration.value;
 
@@ -30,10 +30,10 @@ export default function concurrent(_options) {
     const options = defaults(_options, {
       limit: values.length,
       breakOnError: true,
+      transform: identity,
+      onCompleted: () => noop,
       onResolved: noop,
       onRejected: noop,
-      onCompleted: noop,
-      transform: identity,
     });
 
     let count = 0;
@@ -42,7 +42,7 @@ export default function concurrent(_options) {
 
     const iterator = values.entries();
 
-    const shouldStop = () => fulfilled;
+    const isFulfilled = () => fulfilled;
 
     function done(value) {
       resolve(value);
@@ -83,8 +83,8 @@ export default function concurrent(_options) {
 
     repeat(options.limit, () => run(
       iterator,
+      isFulfilled,
       transform,
-      shouldStop,
       onResolved,
       onRejected,
       onCompleted,

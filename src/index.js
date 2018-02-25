@@ -1,23 +1,10 @@
-import all from './all';
-import race from './race';
-import props from './props';
-import map from './map';
-import mapSeries from './mapSeries';
-import reduce from './reduce';
-import each from './each';
-import filter from './filter';
-import some from './some';
-import any from './any';
-
-export default {
-  all,
-  race,
-  props,
-  map,
-  mapSeries,
-  reduce,
-  each,
-  filter,
-  some,
-  any,
-};
+export { default as all } from './all';
+export { default as race } from './race';
+export { default as props } from './props';
+export { default as map } from './map';
+export { default as mapSeries } from './mapSeries';
+export { default as reduce } from './reduce';
+export { default as each } from './each';
+export { default as filter } from './filter';
+export { default as some } from './some';
+export { default as any } from './any';
