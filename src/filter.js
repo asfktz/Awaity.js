@@ -21,11 +21,12 @@ export default function filter(iterable, _filterer, options = {}) {
             }
           });
       },
-      shouldStop(count, values) {
-        return (count === values.length);
+      onCompleted: done => (count, values) => {
+        if (count === values.length) {
+          done(toArray(resolved));
+        }
       },
     }));
 
   return promise.then(() => toArray(resolved));
 }
-

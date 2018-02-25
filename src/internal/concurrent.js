@@ -2,7 +2,12 @@ import { repeat, identity, defaults, noop } from './utils';
 
 function run(...args) {
   const [
-    iterator, transform, shouldStop, onResolved, onRejected,
+    iterator,
+    transform,
+    shouldStop,
+    onResolved,
+    onRejected,
+    onCompleted,
   ] = args;
 
   const iteration = iterator.next();
@@ -14,7 +19,10 @@ function run(...args) {
   transform(value, key)
     .then(resolved => onResolved(resolved, key))
     .catch(error => onRejected(error, key))
-    .then(() => run(...args));
+    .then(() => {
+      onCompleted();
+      run(...args);
+    });
 }
 
 export default function concurrent(_options) {
@@ -24,48 +32,62 @@ export default function concurrent(_options) {
       breakOnError: true,
       onResolved: noop,
       onRejected: noop,
+      onCompleted: noop,
       transform: identity,
     });
 
     let count = 0;
     let fulfilled = false;
+    let errors = [];
 
     const iterator = values.entries();
 
-    const shouldStop = () => fulfilled || options.shouldStop(count, values);
+    const shouldStop = () => fulfilled;
 
-    const onCall = fn => (...args) => {
+    function done(value) {
+      resolve(value);
+      fulfilled = true;
+    }
+
+    function throws(error) {
+      reject(error);
+      fulfilled = true;
+    }
+
+    function onCompleted() {
+      if (options.breakOnError && errors.length) {
+        throws(errors[0]);
+        return;
+      }
+
+      options.onCompleted(done, throws)(count, values, errors);
+    }
+
+    function onRejected(error) {
+      if (fulfilled) { return; }
+      count += 1;
+      errors = errors.concat(error);
+      return options.onRejected(error);
+    }
+
+    function onResolved(value, key) {
       if (fulfilled) { return; }
       count += 1;
 
-      // eslint-disable-next-line consistent-return
-      return fn(...args);
-    };
-
-    const onRejected = onCall((err) => {
-      options.onRejected(err);
-
-      if (options.breakOnError) {
-        reject();
-        fulfilled = true;
-      }
-    });
-
-    const onResolved = onCall((value, key) => {
-      return Promise.resolve()
-        .then(() => options.onResolved(value, key, values, count))
-        .then(() => {
-          if (shouldStop()) {
-            resolve();
-            fulfilled = true;
-          }
-        });
-    });
+      return options.onResolved(value, key, values, count);
+    }
 
     const transform = (value, key) => {
-      return Promise.resolve(options.transform(value, key, values));
+      return Promise.resolve(options.transform(value, key, values, count));
     };
 
-    repeat(options.limit, () => run(iterator, transform, shouldStop, onResolved, onRejected));
+    repeat(options.limit, () => run(
+      iterator,
+      transform,
+      shouldStop,
+      onResolved,
+      onRejected,
+      onCompleted,
+    ));
   });
 }

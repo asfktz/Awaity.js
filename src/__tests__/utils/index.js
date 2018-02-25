@@ -22,3 +22,13 @@ export function around(actualTime, expectedTime, offset) {
 
   return true;
 }
+
+
+export async function syncify(fn) {
+  try {
+    const result = await fn();
+    return () => { return result; };
+  } catch (e) {
+    return () => { throw e; };
+  }
+}

@@ -27,12 +27,20 @@ test('should continue even if some of promises fails', async () => {
   expect(winner).toEqual('index 3');
 });
 
-test.only('should throw if all promises fails', async () => {
+test('should throw if all promises fails', async () => {
   const promises = [100, 100, 30, 25, 100, 100].map((ms, i) => {
     return wait(ms).then(() => {
       throw new Error(i);
     });
   });
 
-  expect(await any(promises)).toThrow();
+
+  let error;
+  try {
+    await any(promises);
+  } catch (_error) {
+    error = _error;
+  }
+
+  expect(error.message).toBe('3');
 });

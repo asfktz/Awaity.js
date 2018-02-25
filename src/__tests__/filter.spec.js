@@ -18,3 +18,27 @@ test('should limit concurrent promises to 2', async () => {
 
   expect(around(actualTime, expectedTime, 60)).toBe(true);
 });
+
+
+test('should fail on first error ', async () => {
+  const promises = [100, 80, 50, 100, 100, 100].map((ms, i) => {
+    return wait(ms).then(() => {
+      if (i === 1 || i === 2) {
+        throw new Error(i);
+      }
+
+      return i;
+    });
+  });
+
+  let error;
+  try {
+    await filter(promises, async (i) => {
+      return i === '3';
+    });
+  } catch (_error) {
+    error = _error;
+  }
+
+  expect(error.message).toBe('2');
+});

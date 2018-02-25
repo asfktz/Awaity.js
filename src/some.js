@@ -1,20 +1,25 @@
 import concurrent from './internal/concurrent';
-import { toArray } from './internal/utils';
+import { toArray, size } from './internal/utils';
 
 export default function some(iterable, total) {
   const resolved = {};
 
-  const promise = Promise.resolve(iterable)
+  return Promise.resolve(iterable)
     .then(concurrent({
+      breakOnError: false,
       onResolved(value, key, values, count) {
         if (count <= total) {
           resolved[key] = value;
         }
       },
-      shouldStop(count) {
-        return (count === total || count === iterable.length);
+      onCompleted: (done, throws) => (count, values, errors) => {
+        const tooManyFails = (values.length - errors.length) <= total;
+
+        if (tooManyFails) {
+          throws(errors[0]);
+        } else if (size(resolved) === total) {
+          done(toArray(resolved));
+        }
       },
     }));
-
-  return promise.then(() => toArray(resolved));
 }
