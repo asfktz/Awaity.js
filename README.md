@@ -10,8 +10,6 @@
 ----
 
 #### map(iterable, mapper, { concurrency: Infinity })
-```js
-```
 
 ```js
 import { map } from 'littlebird';
