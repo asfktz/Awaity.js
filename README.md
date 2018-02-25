@@ -9,24 +9,6 @@
 
 ----
 
-#### all
-
-```js
-const results = await async.all(promises);
-```
-
-#### props
-
-```js
-const results = await async.props({ one: promise, two: 'value' });
-```
-
-#### race
-
-```js
-const results = await async.race(promises);
-```
-
 #### map
 
 ```js
@@ -50,17 +32,48 @@ const promises = [1,2,3].map(async (id) => {
 const titles = await mapAsync(promises, (post) => post.title);
 ```
 
+
 #### mapSeries
 
 ```js
+import { mapSeries } from 'littlebird';
+
 const results = await async.mapSeries();
 ```
 
 #### reduce
 
 ```js
-const results = await async.reduce();
+import { reduce as reduceAsync } from 'littlebird';
+
+const results = await reduceAsync(promises, async (count, num) => {
+    return count + num
+}, 0);
 ```
+
+#### all
+
+```js
+import { all } from 'littlebird';
+
+const results = await all(promises);
+
+results // [...,...,...,...]
+```
+
+#### props
+
+```js
+import { props } from 'littleBird';
+
+const results = await props({
+    one: promise,
+    two: 'value'
+});
+
+results // { one: ..., two: ... }
+```
+
 
 #### each
 
@@ -78,6 +91,12 @@ const results = await async.filter();
 
 ```js
 const results = await async.some();
+```
+
+#### race
+
+```js
+const results = await async.race(promises);
 ```
 
 #### any
