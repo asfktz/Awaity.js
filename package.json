@@ -2,7 +2,7 @@
   "name": "awaity",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest"
   },
@@ -27,6 +27,9 @@
     ]
   },
   "jest": {
-    "testPathIgnorePatterns": ["/__tests__/utils/", "/node_modules/"]
+    "testPathIgnorePatterns": [
+      "/__tests__/utils/",
+      "/node_modules/"
+    ]
   }
 }

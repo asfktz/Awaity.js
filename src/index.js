@@ -7,6 +7,7 @@ import reduce from './reduce';
 import each from './each';
 import filter from './filter';
 import some from './some';
+import any from './any';
 
 export default {
   all,
@@ -18,6 +19,5 @@ export default {
   each,
   filter,
   some,
+  any,
 };
-
-export function any() {}

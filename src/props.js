@@ -4,7 +4,8 @@ export default function props(obj) {
 
   return Promise.all(values).then((resolvedVals) => {
     return resolvedVals.reduce((results, val, i) => {
-      return { ...obj, [keys[i]]: val };
+      results[keys[i]] = val;
+      return results;
     }, {});
   });
 }
