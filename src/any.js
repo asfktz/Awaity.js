@@ -1,4 +1,5 @@
 import concurrent from './internal/concurrent';
+import SubError from './internal/SubError';
 
 export default function any(iterable) {
   let winner;
@@ -13,7 +14,7 @@ export default function any(iterable) {
         if (winner) {
           done(winner);
         } else if (errors.length === values.length) {
-          throws(errors[0]);
+          throws(new SubError(errors));
         }
       },
     }));
