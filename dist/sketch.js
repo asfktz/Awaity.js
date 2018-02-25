@@ -42,22 +42,6 @@ var _utils = require('./__tests__/utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } // import filter from './filter';
-// import { wait } from './__tests__/utils';
-
-// async function run() {
-//   const promises = [100, 100, 50, 25, 200, 100].map((ms, i) => {
-//     return wait(ms).then(() => `index ${i}`);
-//   });
-
-//   const results = await filter(promises, (txt) => {
-//     return txt === 'index 2';
-//   }, { concurrency: 2 });
-
-//   console.log(results);
-// }
-
-// run().catch(console.error);
-
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 run().catch(console.error);

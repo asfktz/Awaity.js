@@ -16,8 +16,8 @@ function run() {
   }
 
   var iterator = args[0],
-      transform = args[1],
-      shouldStop = args[2],
+      isFulfilled = args[1],
+      transform = args[2],
       onResolved = args[3],
       onRejected = args[4],
       onCompleted = args[5];
@@ -25,7 +25,7 @@ function run() {
 
   var iteration = iterator.next();
 
-  if (iteration.done || shouldStop()) return;
+  if (iteration.done || isFulfilled()) return;
 
   var _iteration$value = _slicedToArray(iteration.value, 2),
       key = _iteration$value[0],
@@ -47,10 +47,12 @@ function concurrent(_options) {
       var options = (0, _utils.defaults)(_options, {
         limit: values.length,
         breakOnError: true,
+        transform: _utils.identity,
+        onCompleted: function onCompleted() {
+          return _utils.noop;
+        },
         onResolved: _utils.noop,
-        onRejected: _utils.noop,
-        onCompleted: _utils.noop,
-        transform: _utils.identity
+        onRejected: _utils.noop
       });
 
       var count = 0;
@@ -59,7 +61,7 @@ function concurrent(_options) {
 
       var iterator = values.entries();
 
-      var shouldStop = function shouldStop() {
+      var isFulfilled = function isFulfilled() {
         return fulfilled;
       };
 
@@ -105,7 +107,7 @@ function concurrent(_options) {
       };
 
       (0, _utils.repeat)(options.limit, function () {
-        return run(iterator, transform, shouldStop, onResolved, onRejected, onCompleted);
+        return run(iterator, isFulfilled, transform, onResolved, onRejected, onCompleted);
       });
     });
   };

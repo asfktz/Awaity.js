@@ -9,6 +9,10 @@ var _concurrent = require('./internal/concurrent');
 
 var _concurrent2 = _interopRequireDefault(_concurrent);
 
+var _SubError = require('./internal/SubError');
+
+var _SubError2 = _interopRequireDefault(_SubError);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function any(iterable) {
@@ -25,7 +29,7 @@ function any(iterable) {
         if (winner) {
           done(winner);
         } else if (errors.length === values.length) {
-          throws(errors[0]);
+          throws(new _SubError2.default(errors));
         }
       };
     }
