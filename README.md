@@ -8,6 +8,8 @@
 
 
 
+<br><br><br>
+
 
 #### map(iterable, mapper, { concurrency: Infinity })
 Given an Iterable(arrays are Iterable), or a promise of an Iterable, which produces promises (or a mix of promises and values), iterate over all the values in the Iterable into an array and map the array to another using the given mapper function.
