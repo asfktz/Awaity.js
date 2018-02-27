@@ -12,12 +12,11 @@
 
 
 ### Features
-- a toolbox for your `async` / `await` needs (think lodash with promises)
+- A toolbox for your `async` / `await` needs (think lodash with promises)
 - Fine-grained concurrency control
 - Tree Shaking support, take only what you need and leave the rest.
-- Async Array#extra 
 - It's tiny, around 3KB.
-- Uses Native Promises instead.
+- Uses Native Promises.
 - Fully compatible with Bluebird's Static Methods.
 
 
