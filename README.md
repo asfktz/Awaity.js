@@ -13,7 +13,7 @@
 
 ### Features
 * It's like lodash for dates
-* Tree Shaking support, Take only what you need and leave the rest.
+* Tree Shaking support, take only what you need and leave the rest.
 * Uses Native Promises instead
 
 
