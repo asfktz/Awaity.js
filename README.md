@@ -17,7 +17,7 @@
 - Tree Shaking support, take only what you need and leave the rest.
 - It's tiny, around 3KB.
 - Uses Native Promises.
-- Fully compatible with Bluebird's Static Methods.
+- Fully compatible with Bluebird's Collections Methods.
 
 
 
