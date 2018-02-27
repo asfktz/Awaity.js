@@ -11,20 +11,11 @@
 <br><br><br>
 
 
-
 ### Features
 * Tree Shaking suppurt, Take only what you need and leave the rest.
 * Uses Native Promises instead
 
 
-
-
-### Table of contents
-
-- Features
-- Installation
-- Usage
-- API
 
 
 ### Installation
