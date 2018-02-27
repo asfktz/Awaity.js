@@ -12,14 +12,13 @@
 
 
 ### Features
-- A swissnife for your `async` / `await` needs (think lodash with promises).
-- Async Array#extra (`map` / `reduce` / `filter` / `some` / ...)
+- A swissnife for your `async` / `await` needs (think `map` / `reduce` with promises)
 - Fine-grained concurrency control
 - Tree Shaking support, take only what you need and leave the rest.
+- Async Array#extra 
 - It's tiny, around 3KB.
 - Uses Native Promises instead.
-- Compatible with Bluebird's API
-
+- Fully compatible with Bluebird's Static Methods.
 
 
 
