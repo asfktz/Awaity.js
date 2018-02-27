@@ -14,7 +14,8 @@
 ### Features
 - It's like lodash for `async` / `await`
 - Tree Shaking support, take only what you need and leave the rest.
-- Uses Native Promises instead
+- It's tiny, around 3KB.
+- Uses Native Promises instead.
 
 
 
