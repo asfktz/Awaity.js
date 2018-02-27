@@ -42,3 +42,5 @@ import { map as mapAsync } from 'littlebird/esm';
 ```js
 import mapAsync from 'littlebird/map';
 ```
+
+See full [API](/docs/api.md)
