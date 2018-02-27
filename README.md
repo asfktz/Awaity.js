@@ -12,7 +12,8 @@
 
 
 ### Features
-* Tree Shaking suppurt, Take only what you need and leave the rest.
+* It's like lodash for dates
+* Tree Shaking support, Take only what you need and leave the rest.
 * Uses Native Promises instead
 
 
