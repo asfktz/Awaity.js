@@ -12,7 +12,7 @@
 
 
 ### Features
-* It's like lodash for dates
+* It's like lodash for `async` / `await`
 * Tree Shaking support, take only what you need and leave the rest.
 * Uses Native Promises instead
 
