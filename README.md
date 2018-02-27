@@ -8,12 +8,23 @@
 <p>A functional, lightweight alternative to bluebird.js<br>for the modern age of <code>async</code> / <code>await</code> </p> 
 </div>
 
-
-
 <br><br><br>
 
+
+
 ### Features
-* Tree shake support
+* Tree Shaking suppurt, Take only what you need and leave the rest.
+* Uses Native Promises instead
+
+
+
+
+### Table of contents
+
+- Features
+- Installation
+- Usage
+- API
 
 
 ### Installation
@@ -32,16 +43,6 @@ import { map as mapAsync } from 'littlebird';
 
 
 #### map(iterable, mapper, { concurrency: Infinity })
-Given an Iterable(arrays are Iterable), or a promise of an Iterable, which produces promises (or a mix of promises and values), iterate over all the values in the Iterable into an array and map the array to another using the given mapper function.
-
-Promises returned by the mapper function are awaited for and the returned promise doesn't fulfill until all mapped promises have fulfilled as well. If any promise in the array is rejected, or any promise returned by the mapper function is rejected, the returned promise is rejected as well.
-
-The mapper function for a given item is called as soon as possible, that is, when the promise for that item's index in the input array is fulfilled. This doesn't mean that the result array has items in random order, it means that .map can be used for concurrency coordination unlike .all.
-
-A common use of Promise.map is to replace the .push+Promise.all boilerplate:
-
-
-
 
 ```js
 import { map } from 'littlebird';
