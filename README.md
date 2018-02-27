@@ -31,9 +31,14 @@ npm install littlebird
 
 ```js
 import * as Async from 'littlebird';
+````
 
-// or, take only what you need
-import { map as mapAsync } from 'littlebird';
+Or, take only what you need
+
+```js
+import { map as mapAsync } from 'littlebird/esm';
+
+import mapAsync from 'littlebird/map';
 ```
 
 
