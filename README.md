@@ -45,3 +45,5 @@ import mapAsync from 'littlebird/map';
 
 ## API
 See full [API](/docs/api.md)
+
+## Credits
