@@ -43,7 +43,18 @@ import mapAsync from 'littlebird/map';
 ```
 
 ## API
-See full [API](/docs/api.md)
+Documentation is still a work in progress, but since the API is fully compitable with Bluebird's Collections methods, you can read about them there.
+
+#### all
+#### any
+#### each
+#### filter
+#### map
+#### mapSeries
+#### props
+#### race
+#### reduce
+#### some
 
 ## Credits
 Todo
