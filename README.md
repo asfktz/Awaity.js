@@ -37,7 +37,8 @@ Or, take only what you need
 
 ```js
 import { map as mapAsync } from 'littlebird/esm';
-
+```
+```js
 import mapAsync from 'littlebird/map';
 ```
 
