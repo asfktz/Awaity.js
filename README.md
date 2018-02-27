@@ -12,7 +12,7 @@
 
 
 ### Features
-- A toolbox for your `async` / `await` needs (think lodash with promises)
+- A toolbelt for `async` / `await`, use  with functions like `map`, `reduce` & `each` with promises
 - Fine-grained concurrency control
 - Tree Shaking support, take only what you need and leave the rest.
 - It's tiny, around 3KB.
