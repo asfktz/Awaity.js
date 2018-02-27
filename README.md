@@ -12,7 +12,7 @@
 
 
 ### Features
-- A swissnife for `async` / `await`, think lodash with promises.
+- A swissnife for your `async` / `await` needs (think lodash with promises).
 - Async Array#extra (`map` / `reduce` / `filter` / `some` / ...)
 - Fine-grained concurrency control
 - Tree Shaking support, take only what you need and leave the rest.
