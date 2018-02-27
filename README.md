@@ -23,12 +23,12 @@
 
 
 
-### Installation
+## Installation
 ```js
 npm install littlebird
 ```
 
-### Usage
+## Usage
 
 ```js
 import * as Async from 'littlebird';
@@ -43,4 +43,5 @@ import { map as mapAsync } from 'littlebird/esm';
 import mapAsync from 'littlebird/map';
 ```
 
+## API
 See full [API](/docs/api.md)
