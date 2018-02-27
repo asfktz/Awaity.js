@@ -16,6 +16,7 @@
 - Tree Shaking support, take only what you need and leave the rest.
 - It's tiny, around 3KB.
 - Uses Native Promises instead.
+- Compatible with Bluebird's API
 
 
 
