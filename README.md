@@ -39,7 +39,7 @@ import * as Async from 'littlebird';
 Or, take only what you need
 
 ```js
-import { map as mapAsync } from 'littlebird/esm';
+import { map as mapAsync } from 'littlebird';
 ```
 ```js
 import mapAsync from 'littlebird/map';
