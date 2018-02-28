@@ -27,6 +27,9 @@
 npm install littlebird
 ```
 
+### Introduction
+littleBird implements Bluebird's collections methods with native promises
+
 ## Usage
 
 ```js
