@@ -21,14 +21,14 @@
 
 
 
+## Introduction
+littleBird implements Bluebird's collections methods with native promises
+
 
 ## Installation
 ```js
 npm install littlebird
 ```
-
-### Introduction
-littleBird implements Bluebird's collections methods with native promises
 
 ## Usage
 
