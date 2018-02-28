@@ -15,7 +15,7 @@
 - A toolbelt for `async` / `await`, use  with functions like `map`, `reduce` & `each` with promises
 - Fine-grained concurrency control
 - Tree Shaking support, take only what you need and leave the rest.
-- It's tiny, around 3KB.
+- It's tiny, about 2KB tiny.
 - Uses Native Promises.
 - Fully compatible with Bluebird's Collections Methods.
 
