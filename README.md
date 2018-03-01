@@ -1,12 +1,13 @@
 <br><br>
 
-<div align="center">
-<div>
+
+<!-- <div align="center">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img width="52%" src="http://oi63.tinypic.com/206iro8.jpg" />
-</div>
-  
-<p>A functional, lightweight alternative to bluebird.js<br> built with <code>async</code> / <code>await</code> in mind.</p> 
-</div>
+</div> -->
+
+[Logo](/media/header.png)
+ 
+> A functional, lightweight alternative to bluebird.js, built with `async` / `await` in mind.
 
 <br><br><br>
 
@@ -70,4 +71,4 @@ Documentation is still a work in progress, but since the API is fully compitable
 
 
 ## Credits
-Todo 111
+Todo

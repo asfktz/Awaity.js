@@ -1,17 +1,18 @@
 {
   "name": "awaity",
-  "version": "0.0.8",
+  "version": "0.0.11",
   "description": "",
   "main": "index.js",
   "module": "esm/index.js",
   "sideEffects": false,
+  "private": true,
   "scripts": {
     "build": "node scripts/build",
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Asaf Katz",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "babel": "^6.23.0",
