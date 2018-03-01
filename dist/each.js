@@ -1,18 +1,7 @@
-'use strict';
+import series from './internal/series';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = each;
-
-var _series = require('./internal/series');
-
-var _series2 = _interopRequireDefault(_series);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function each(iterable, iterator) {
-  return Promise.all(iterable).then((0, _series2.default)(function (results, value, key, values) {
+export default function each(iterable, iterator) {
+  return Promise.all(iterable).then(series(function (results, value, key, values) {
     return iterator(value, key, values);
   })).then(function () {
     return undefined;

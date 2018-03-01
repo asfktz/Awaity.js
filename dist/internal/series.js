@@ -1,10 +1,5 @@
-"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = series;
-function series(reducer) {
+export default function series(reducer) {
   return function (iterable) {
     var initial = Promise.resolve([]);
     return iterable.reduce(function (chain, value, key) {

@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = props;
-function props(obj) {
+export default function props(obj) {
   var keys = Object.keys(obj);
   var values = Object.values(obj);
 

@@ -1,22 +1,10 @@
-'use strict';
+import concurrent from './internal/concurrent';
+import { toArray, size } from './internal/utils';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = some;
-
-var _concurrent = require('./internal/concurrent');
-
-var _concurrent2 = _interopRequireDefault(_concurrent);
-
-var _utils = require('./internal/utils');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function some(iterable, total) {
+export default function some(iterable, total) {
   var resolved = {};
 
-  return Promise.resolve(iterable).then((0, _concurrent2.default)({
+  return Promise.resolve(iterable).then(concurrent({
     breakOnError: false,
     onResolved: function onResolved(value, key, values, count) {
       if (count <= total) {
@@ -30,8 +18,8 @@ function some(iterable, total) {
 
         if (tooManyFails) {
           throws(errors[0]);
-        } else if ((0, _utils.size)(resolved) === total) {
-          done((0, _utils.toArray)(resolved));
+        } else if (size(resolved) === total) {
+          done(toArray(resolved));
         }
       };
     }

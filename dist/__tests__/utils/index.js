@@ -1,10 +1,12 @@
-"use strict";
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+export var wait = function wait(ms) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, ms);
+  });
+};
 
-var measureTime = exports.measureTime = function () {
+export var measureTime = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(fn) {
     var startTime, endTime;
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -32,7 +34,22 @@ var measureTime = exports.measureTime = function () {
   };
 }();
 
-var syncify = exports.syncify = function () {
+export function around(actualTime, expectedTime, offset) {
+  if (Math.abs(expectedTime - actualTime) > offset) {
+    console.error({
+      diff: expectedTime - actualTime,
+      expectedTime: expectedTime,
+      actualTime: actualTime,
+      offset: offset
+    });
+
+    return false;
+  }
+
+  return true;
+}
+
+export var syncify = function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(fn) {
     var result;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -68,28 +85,3 @@ var syncify = exports.syncify = function () {
     return _ref2.apply(this, arguments);
   };
 }();
-
-exports.around = around;
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-var wait = exports.wait = function wait(ms) {
-  return new Promise(function (resolve) {
-    return setTimeout(resolve, ms);
-  });
-};
-
-function around(actualTime, expectedTime, offset) {
-  if (Math.abs(expectedTime - actualTime) > offset) {
-    console.error({
-      diff: expectedTime - actualTime,
-      expectedTime: expectedTime,
-      actualTime: actualTime,
-      offset: offset
-    });
-
-    return false;
-  }
-
-  return true;
-}

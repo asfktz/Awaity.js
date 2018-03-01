@@ -1,12 +1,8 @@
-'use strict';
-
-var _each = require('../each');
-
-var _each2 = _interopRequireDefault(_each);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _this = this;
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+import each from '../each';
 
 test('should iterate each serially', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
   var iterable, str, returns;
@@ -17,7 +13,7 @@ test('should iterate each serially', _asyncToGenerator( /*#__PURE__*/regenerator
           iterable = [1, 2, 3, 4, 5, 6];
           str = '';
           _context2.next = 4;
-          return (0, _each2.default)(iterable, function () {
+          return each(iterable, function () {
             var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(i) {
               var val;
               return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -37,7 +33,7 @@ test('should iterate each serially', _asyncToGenerator( /*#__PURE__*/regenerator
                       return _context.stop();
                   }
                 }
-              }, _callee, undefined);
+              }, _callee, _this);
             }));
 
             return function (_x) {
@@ -57,5 +53,5 @@ test('should iterate each serially', _asyncToGenerator( /*#__PURE__*/regenerator
           return _context2.stop();
       }
     }
-  }, _callee2, undefined);
+  }, _callee2, _this);
 })));

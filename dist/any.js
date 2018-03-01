@@ -1,24 +1,10 @@
-'use strict';
+import concurrent from './internal/concurrent';
+import SubError from './internal/SubError';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = any;
-
-var _concurrent = require('./internal/concurrent');
-
-var _concurrent2 = _interopRequireDefault(_concurrent);
-
-var _SubError = require('./internal/SubError');
-
-var _SubError2 = _interopRequireDefault(_SubError);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function any(iterable) {
+export default function any(iterable) {
   var winner = void 0;
 
-  return Promise.resolve(iterable).then((0, _concurrent2.default)({
+  return Promise.resolve(iterable).then(concurrent({
     breakOnError: false,
     onResolved: function onResolved(value) {
       winner = value;
@@ -29,7 +15,7 @@ function any(iterable) {
         if (winner) {
           done(winner);
         } else if (errors.length === values.length) {
-          throws(new _SubError2.default(errors));
+          throws(new SubError(errors));
         }
       };
     }

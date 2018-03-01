@@ -1,12 +1,8 @@
-'use strict';
-
-var _all = require('../all');
-
-var _all2 = _interopRequireDefault(_all);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _this = this;
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+import all from '../all';
 
 test('all', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
   var promises, results;
@@ -18,7 +14,7 @@ test('all', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _ca
             return Promise.resolve(i + '!');
           });
           _context.next = 3;
-          return (0, _all2.default)(promises);
+          return all(promises);
 
         case 3:
           results = _context.sent;
@@ -30,5 +26,5 @@ test('all', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _ca
           return _context.stop();
       }
     }
-  }, _callee, undefined);
+  }, _callee, _this);
 })));

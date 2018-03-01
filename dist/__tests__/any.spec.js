@@ -1,14 +1,9 @@
-'use strict';
-
-var _any = require('../any');
-
-var _any2 = _interopRequireDefault(_any);
-
-var _utils = require('./utils');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _this = this;
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+import any from '../any';
+import { wait } from './utils';
 
 test('should take only one winner', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
   var promises, winner;
@@ -17,12 +12,12 @@ test('should take only one winner', _asyncToGenerator( /*#__PURE__*/regeneratorR
       switch (_context.prev = _context.next) {
         case 0:
           promises = [100, 100, 30, 25, 200, 100].map(function (ms, i) {
-            return (0, _utils.wait)(ms).then(function () {
+            return wait(ms).then(function () {
               return 'index ' + i;
             });
           });
           _context.next = 3;
-          return (0, _any2.default)(promises, 2);
+          return any(promises, 2);
 
         case 3:
           winner = _context.sent;
@@ -35,7 +30,7 @@ test('should take only one winner', _asyncToGenerator( /*#__PURE__*/regeneratorR
           return _context.stop();
       }
     }
-  }, _callee, undefined);
+  }, _callee, _this);
 })));
 
 test('should continue even if some of promises fails', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
@@ -45,7 +40,7 @@ test('should continue even if some of promises fails', _asyncToGenerator( /*#__P
       switch (_context2.prev = _context2.next) {
         case 0:
           promises = [100, 100, 30, 25, 100, 100].map(function (ms, i) {
-            return (0, _utils.wait)(ms).then(function () {
+            return wait(ms).then(function () {
               if (i === 1 || i === 4) {
                 throw new Error();
               }
@@ -54,7 +49,7 @@ test('should continue even if some of promises fails', _asyncToGenerator( /*#__P
             });
           });
           _context2.next = 3;
-          return (0, _any2.default)(promises);
+          return any(promises);
 
         case 3:
           winner = _context2.sent;
@@ -66,7 +61,7 @@ test('should continue even if some of promises fails', _asyncToGenerator( /*#__P
           return _context2.stop();
       }
     }
-  }, _callee2, undefined);
+  }, _callee2, _this);
 })));
 
 test('should throw if all promises fails', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
@@ -76,14 +71,14 @@ test('should throw if all promises fails', _asyncToGenerator( /*#__PURE__*/regen
       switch (_context3.prev = _context3.next) {
         case 0:
           promises = [100, 100, 30, 25, 100, 100].map(function (ms, i) {
-            return (0, _utils.wait)(ms).then(function () {
+            return wait(ms).then(function () {
               throw new Error(i);
             });
           });
           error = void 0;
           _context3.prev = 2;
           _context3.next = 5;
-          return (0, _any2.default)(promises);
+          return any(promises);
 
         case 5:
           _context3.next = 10;
@@ -104,5 +99,5 @@ test('should throw if all promises fails', _asyncToGenerator( /*#__PURE__*/regen
           return _context3.stop();
       }
     }
-  }, _callee3, undefined, [[2, 7]]);
+  }, _callee3, _this, [[2, 7]]);
 })));

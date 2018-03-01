@@ -1,14 +1,9 @@
-'use strict';
-
-var _reduce = require('../reduce');
-
-var _reduce2 = _interopRequireDefault(_reduce);
-
-var _utils = require('./utils');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _this = this;
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+import reduce from '../reduce';
+import { wait, measureTime, around } from './utils';
 
 test('should reduce serially', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
   var iterable, duration, expectedTime, actualTime;
@@ -20,14 +15,14 @@ test('should reduce serially', _asyncToGenerator( /*#__PURE__*/regeneratorRuntim
           duration = 100;
           expectedTime = iterable.length * duration;
           _context3.next = 5;
-          return (0, _utils.measureTime)(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+          return measureTime(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
             var results;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
               while (1) {
                 switch (_context2.prev = _context2.next) {
                   case 0:
                     _context2.next = 2;
-                    return (0, _reduce2.default)(iterable, function () {
+                    return reduce(iterable, function () {
                       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(str, i) {
                         var val;
                         return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -35,7 +30,7 @@ test('should reduce serially', _asyncToGenerator( /*#__PURE__*/regeneratorRuntim
                             switch (_context.prev = _context.next) {
                               case 0:
                                 _context.next = 2;
-                                return (0, _utils.wait)(duration);
+                                return wait(duration);
 
                               case 2:
                                 _context.next = 4;
@@ -50,7 +45,7 @@ test('should reduce serially', _asyncToGenerator( /*#__PURE__*/regeneratorRuntim
                                 return _context.stop();
                             }
                           }
-                        }, _callee, undefined);
+                        }, _callee, _this);
                       }));
 
                       return function (_x, _x2) {
@@ -69,19 +64,19 @@ test('should reduce serially', _asyncToGenerator( /*#__PURE__*/regeneratorRuntim
                     return _context2.stop();
                 }
               }
-            }, _callee2, undefined);
+            }, _callee2, _this);
           })));
 
         case 5:
           actualTime = _context3.sent;
 
 
-          expect((0, _utils.around)(actualTime, expectedTime, 50)).toBe(true);
+          expect(around(actualTime, expectedTime, 50)).toBe(true);
 
         case 7:
         case 'end':
           return _context3.stop();
       }
     }
-  }, _callee3, undefined);
+  }, _callee3, _this);
 })));

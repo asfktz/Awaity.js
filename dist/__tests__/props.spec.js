@@ -1,12 +1,8 @@
-'use strict';
-
-var _props = require('../props');
-
-var _props2 = _interopRequireDefault(_props);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _this = this;
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+import props from '../props';
 
 test('props', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
   var results;
@@ -15,7 +11,7 @@ test('props', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _
       switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return (0, _props2.default)({
+          return props({
             a: 'A',
             b: Promise.resolve('B')
           });
@@ -31,5 +27,5 @@ test('props', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _
           return _context.stop();
       }
     }
-  }, _callee, undefined);
+  }, _callee, _this);
 })));
