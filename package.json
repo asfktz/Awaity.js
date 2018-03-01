@@ -1,12 +1,12 @@
 {
   "name": "awaity",
-  "version": "0.0.2",
+  "version": "0.0.7",
   "description": "",
   "main": "index.js",
   "module": "esm/index.js",
   "sideEffects": false,
   "scripts": {
-    "build": "rm -rf dist && babel src --out-dir dist",
+    "build": "node scripts/build",
     "test": "jest"
   },
   "keywords": [],
@@ -20,6 +20,7 @@
     "babel-preset-env": "^1.6.1",
     "eslint": "^4.18.1",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jest": "^21.12.2",
     "fs-extra": "^5.0.0",
