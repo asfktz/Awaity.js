@@ -4,6 +4,19 @@ const babel = require('babel-core');
 const util = require('util');
 const glob = util.promisify(require('glob'));
 
+async function transform (sources, basePath, envOptions) {
+  await Promise.all(sources.map(async (origPath) => {
+    const contents = await readFile(origPath);
+    const path = join(basePath, relative('./src', origPath));
+    const transformed = babel.transform(contents, {
+      presets: [['env', envOptions]]
+    });;
+
+    await ensureDir(dirname(path));
+    return writeFile(path, transformed.code);
+  }));
+}
+
 async function run () {
   await remove('./package');
 
@@ -15,18 +28,10 @@ async function run () {
     ignore: './src/__tests__/**'
   });
 
-  const transforms = await Promise.all(sources.map(async (origPath) => {
-    const contents = await readFile(origPath);
-    const path = join('./package', relative('./src', origPath));
-    const transformed = babel.transform(contents, {
-      presets: [['env', { modules: false }]]
-    });;
-
-    await ensureDir(dirname(path));
-    return writeFile(path, transformed.code);
-  }));
-
-  console.log(transforms) 
+  await Promise.all([
+    transform(sources, './package', { modules: 'commonjs' }),
+    transform(sources, './package/esm', { modules: false })
+  ]);
 }
 
 run().catch(console.error)
