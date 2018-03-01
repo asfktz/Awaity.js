@@ -1,8 +1,6 @@
-<br><br>
+# ![Logo](/media/header.png)
 
 
-[Logo](/media/header.png)
- 
 > A functional, lightweight alternative to bluebird.js, built with `async` / `await` in mind.
 
 <br><br><br>
