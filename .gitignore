@@ -59,4 +59,6 @@ typings/
 
 # next.js build output
 .next
-src/.DS_Store
+.DS_Store
+
+package
