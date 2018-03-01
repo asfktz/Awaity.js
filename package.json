@@ -23,11 +23,6 @@
     "eslint-plugin-jest": "^21.12.2",
     "jest": "^22.4.2"
   },
-  "babel": {
-    "presets": [
-      "env"
-    ]
-  },
   "jest": {
     "testPathIgnorePatterns": [
       "/__tests__/utils/",
