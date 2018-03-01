@@ -1,4 +1,5 @@
 import concurrent from './internal/concurrent';
+import resolveIterable from './internal/resolveIterable';
 import { toArray } from './internal/utils';
 
 export default function map(iterable, mapper, options = {}) {
@@ -7,7 +8,7 @@ export default function map(iterable, mapper, options = {}) {
   }
 
   const resolved = {};
-  return Promise.all(iterable)
+  return resolveIterable(iterable)
     .then(concurrent({
       limit: options.concurrency,
       breakOnError: true,
