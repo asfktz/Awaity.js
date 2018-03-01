@@ -17,22 +17,34 @@ async function transform(sources, basePath, envOptions) {
   }));
 }
 
+async function copyPkg(srcPath, targetPath) {
+  const config = await fs.readJson(srcPath);
+
+  delete config.private;
+  delete config.devDependencies;
+  delete config.jest;
+  delete config.scripts;
+
+  const path = join(targetPath, './package.json');
+  return fs.writeJson(path, config, { spaces: '  ' });
+}
+
 async function run() {
+  const targetPath = './package';
+
   console.log('build npm package...');
 
-  await fs.remove('./package');
+  await fs.emptyDir(targetPath);
 
-  ['./package.json'].forEach((file) => {
-    fs.copy(file, join('./package', file));
-  });
+  await copyPkg('./package.json', targetPath);
 
   const sources = await glob('./src/**/*.js', {
     ignore: './src/__tests__/**',
   });
 
   await Promise.all([
-    transform(sources, './package', { modules: 'commonjs' }),
-    transform(sources, './package/esm', { modules: false }),
+    transform(sources, targetPath, { modules: 'commonjs' }),
+    transform(sources, join(targetPath, '/esm'), { modules: false }),
   ]);
 }
 
