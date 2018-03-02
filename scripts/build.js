@@ -29,10 +29,8 @@ async function copyPkg(srcPath, targetPath) {
   return fs.writeJson(path, config, { spaces: '  ' });
 }
 
-async function run() {
-  const targetPath = './package';
-
-  console.log('build npm package...');
+async function build(targetPath, envOptions) {
+  console.log('build npm package...', targetPath, envOptions);
 
   await fs.emptyDir(targetPath);
 
@@ -42,10 +40,13 @@ async function run() {
     ignore: './src/__tests__/**',
   });
 
-  await Promise.all([
-    transform(sources, targetPath, { modules: 'commonjs' }),
-    transform(sources, join(targetPath, '/esm'), { modules: false }),
-  ]);
+  await transform(sources, targetPath, envOptions);
 }
+
+async function run() {
+  await build('./packages/littlebird-es', { modules: false });
+  await build('./packages/littlebird', { modules: 'commonjs' });
+}
+
 
 run().catch(console.error);
