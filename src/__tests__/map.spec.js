@@ -1,8 +1,18 @@
 import map from '../map';
-import { wait, measureTime, around, syncify } from './utils';
+import { wait, measureTime, around } from './utils';
 
 test('should resolve mapper promise concurrently', async () => {
   const results = await map([1, 2, 3], async (i) => {
+    const val = await Promise.resolve(`${i}!`);
+    return val;
+  });
+
+  expect(results).toEqual(['1!', '2!', '3!']);
+});
+
+test('should handle an array resolved from a single promise', async () => {
+  const promise = Promise.resolve([1, 2, 3]);
+  const results = await map(promise, async (i) => {
     const val = await Promise.resolve(`${i}!`);
     return val;
   });

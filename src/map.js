@@ -4,14 +4,14 @@ import { toArray } from './__internal__/utils';
 
 export default function map(iterable, mapper, options = {}) {
   const { concurrency } = options;
-
-  if (!concurrency || iterable.length <= concurrency) {
-    return resolveIterable(iterable).then(values => values.map(mapper));
-  }
-
+  const iterablePromise = resolveIterable(iterable);
   const resolved = {};
 
-  return resolveIterable(iterable)
+  if (!concurrency || iterable.length <= concurrency) {
+    return iterablePromise.then(values => Promise.all(values.map(mapper)));
+  }
+
+  return iterablePromise
     .then(concurrent({
       limit: concurrency,
       breakOnError: true,

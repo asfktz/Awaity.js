@@ -42,5 +42,5 @@ test('should throw if all promises fails', async () => {
     error = _error;
   }
 
-  expect(error.message).toBe('3');
+  expect(error.message.startsWith('SubError')).toBe(true);
 });
