@@ -61,5 +61,5 @@ typings/
 .next
 .DS_Store
 
-package
+packages
 .DS_Store
