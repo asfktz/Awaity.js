@@ -8,6 +8,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build",
+    "pub": "node scripts/publish",
     "test": "jest"
   },
   "keywords": [],
@@ -26,6 +27,7 @@
     "eslint-plugin-jest": "^21.12.2",
     "fs-extra": "^5.0.0",
     "glob": "^7.1.2",
+    "inquirer": "^5.1.0",
     "jest": "^22.4.2"
   },
   "jest": {
