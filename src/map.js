@@ -1,8 +1,8 @@
 import concurrent from './__internal__/concurrent';
 import resolveIterable from './__internal__/resolveIterable';
-import { toArray } from './__internal__/utils';
+import { toArray, identity } from './__internal__/utils';
 
-export default function map(iterable, mapper, options = {}) {
+export default function map(iterable, mapper = identity, options = {}) {
   const { concurrency } = options;
   const iterablePromise = resolveIterable(iterable);
   const resolved = {};

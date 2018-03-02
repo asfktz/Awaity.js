@@ -10,16 +10,6 @@ test('should resolve mapper promise concurrently', async () => {
   expect(results).toEqual(['1!', '2!', '3!']);
 });
 
-test('should handle an array resolved from a single promise', async () => {
-  const promise = Promise.resolve([1, 2, 3]);
-  const results = await map(promise, async (i) => {
-    const val = await Promise.resolve(`${i}!`);
-    return val;
-  });
-
-  expect(results).toEqual(['1!', '2!', '3!']);
-});
-
 test('should resolve iterable of promises ', async () => {
   const promises = [1, 2, 3].map(i => Promise.resolve(i));
 
@@ -74,4 +64,19 @@ test('should fail on first error', async () => {
   }
 
   expect(error.message).toBe('2');
+});
+
+test('should handle an array resolved from a single promise', async () => {
+  const promise = Promise.resolve([1, 2, 3]);
+  const results = await map(promise, async (i) => {
+    const val = await Promise.resolve(`${i}!`);
+    return val;
+  });
+
+  expect(results).toEqual(['1!', '2!', '3!']);
+});
+
+test('should defaults to identity when no mapper provided', async () => {
+  const results = await map([1, 2, 3]);
+  expect(results).toEqual([1, 2, 3]);
 });
