@@ -19,6 +19,7 @@ function $(command, opts) {
     ],
   });
 
+  $('npm test');
   $(`npm version ${version}`);
   $('npm run build');
   $('npm publish', { cwd: './packages/littlebird' });
