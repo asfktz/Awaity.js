@@ -1,0 +1,10 @@
+export { default as all } from './all';
+export { default as race } from './race';
+export { default as props } from './props';
+export { default as map } from './map';
+export { default as mapSeries } from './mapSeries';
+export { default as reduce } from './reduce';
+export { default as each } from './each';
+export { default as filter } from './filter';
+export { default as some } from './some';
+export { default as any } from './any';
