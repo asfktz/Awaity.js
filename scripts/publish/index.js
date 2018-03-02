@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const { execSync } = require('child_process');
 
 
-function run(command, opts) {
+function $(command, opts) {
   execSync(command, { stdio: 'inherit', ...opts });
 }
 
@@ -19,8 +19,8 @@ function run(command, opts) {
     ],
   });
 
-  run(`npm version ${version}`);
-  run('npm run build');
-  run('npm publish', { cwd: './packages/littlebird' });
-  run('npm publish', { cwd: './packages/littlebird-es' });
+  $(`npm version ${version}`);
+  $('npm run build');
+  $('npm publish', { cwd: './packages/littlebird' });
+  $('npm publish', { cwd: './packages/littlebird-es' });
 })();

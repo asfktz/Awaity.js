@@ -3,7 +3,6 @@
   "version": "0.0.14",
   "description": "",
   "main": "index.js",
-  "module": "esm/index.js",
   "sideEffects": false,
   "private": true,
   "scripts": {
