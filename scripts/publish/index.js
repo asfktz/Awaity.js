@@ -19,6 +19,7 @@ function run(command, opts) {
     ],
   });
 
+  run('npm run build');
   run(`npm version ${version}`);
   run('npm publish', { cwd: './packages/littlebird' });
   run('npm publish', { cwd: './packages/littlebird-es' });
