@@ -1,5 +1,5 @@
-import concurrent from './internal/concurrent';
-import { toArray, toBoolean } from './internal/utils';
+import concurrent from './__internal__/concurrent';
+import { toArray, toBoolean } from './__internal__/utils';
 
 export default function filter(iterable, _filterer, options = {}) {
   const resolved = {};

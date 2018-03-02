@@ -1,6 +1,6 @@
-import concurrent from './internal/concurrent';
-import resolveIterable from './internal/resolveIterable';
-import { toArray } from './internal/utils';
+import concurrent from './__internal__/concurrent';
+import resolveIterable from './__internal__/resolveIterable';
+import { toArray } from './__internal__/utils';
 
 export default function map(iterable, mapper, options = {}) {
   if (iterable.length <= options.concurrency) {

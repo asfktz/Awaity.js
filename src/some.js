@@ -1,5 +1,5 @@
-import concurrent from './internal/concurrent';
-import { toArray, size } from './internal/utils';
+import concurrent from './__internal__/concurrent';
+import { toArray, size } from './__internal__/utils';
 
 export default function some(iterable, total) {
   const resolved = {};

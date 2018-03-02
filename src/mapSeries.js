@@ -1,4 +1,4 @@
-import series from './internal/series';
+import series from './__internal__/series';
 
 export default function mapSeries(iterable, mapper) {
   return Promise.all(iterable)

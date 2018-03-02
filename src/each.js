@@ -1,4 +1,4 @@
-import series from './internal/series';
+import series from './__internal__/series';
 
 export default function each(iterable, iterator) {
   return Promise.all(iterable)
