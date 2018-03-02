@@ -3,21 +3,25 @@ const join = (arr, sep) => arr.join(sep);
 
 function createIndexFile(definitions) {
   return join(definitions.map(([name]) => (
-    `export { default as ${name} } from '../${name}'`
+    `export { default as ${name} } from './${name}'`
   )), '\n');
 }
 
 function createFPModule(name, signature) {
   if (!signature.length) {
-    return `export { default as ${name} } from '../${name}'`;
+    return (`
+      import _${name} from '../${name}'
+      export default _${name}
+    `);
   }
 
   const content = (`
+    import curry2 from 'curry2';
     import _${name} from '../${name}';
     
-    export default function ${name} (${join(signature, ', ')}) {
-      return  (iterable) => _${name}(iterable, ${join(signature, ', ')});
-    }
+    export default curry2(function ${name} (${join(signature, ', ')}, iterable) {
+      return  _${name}(iterable, ${join(signature, ', ')});
+    })
   `);
 
   return content.replace(/^\s{0,8}/gm, '');
@@ -25,5 +29,5 @@ function createFPModule(name, signature) {
 
 module.exports = {
   createIndexFile,
-  createFPModule
+  createFPModule,
 };

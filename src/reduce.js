@@ -1,5 +1,5 @@
 import series from './__internal__/series';
 
-export default function reduce(iterable, reducer) {
-  return Promise.all(iterable).then(series(reducer));
+export default function reduce(iterable, reducer, initial) {
+  return Promise.all(iterable).then(series(reducer, initial));
 }

@@ -13,7 +13,9 @@
   "keywords": [],
   "author": "Asaf Katz",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "curry2": "^1.0.3"
+  },
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",

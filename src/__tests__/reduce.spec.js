@@ -11,9 +11,9 @@ test('should reduce serially', async () => {
       await wait(duration);
       const val = await Promise.resolve(`${i}!`);
       return str + val;
-    }, '');
+    }, '0!');
 
-    expect(results).toEqual('1!2!3!4!5!6!');
+    expect(results).toEqual('0!1!2!3!4!5!6!');
   });
 
   expect(around(actualTime, expectedTime, 50)).toBe(true);

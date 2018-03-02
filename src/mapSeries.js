@@ -5,6 +5,9 @@ export default function mapSeries(iterable, mapper) {
     .then(series((results, value, key, values) => {
       return Promise.resolve(value)
         .then(resolved => mapper(resolved, key, values))
-        .then(resolved => [...results, resolved]);
-    }));
+        .then((resolved) => {
+          results.push(resolved);
+          return results;
+        });
+    }, []));
 }
