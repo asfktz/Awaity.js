@@ -1,9 +1,13 @@
 const inquirer = require('inquirer');
 // const util = require('util');
-const spawn = require('child_process').spawn;
+const { execSync } = require('child_process');
 
 
-(async function run() {
+function run(command, opts) {
+  execSync(command, { stdio: 'inherit', ...opts });
+}
+
+(async () => {
   const { version } = await inquirer.prompt({
     type: 'list',
     name: 'version',
@@ -15,5 +19,7 @@ const spawn = require('child_process').spawn;
     ],
   });
 
-  spawn('npm', ['version', version], { stdio: 'inherit' });
-}());
+  run(`npm version ${version}`);
+  run('npm publish', { cwd: './packages/littlebird' });
+  run('npm publish', { cwd: './packages/littlebird-es' });
+})();
