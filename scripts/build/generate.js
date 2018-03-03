@@ -16,12 +16,9 @@ function createFPModule(name, signature) {
   }
 
   const content = (`
-    import curry from '../__internal__/curry';
+    import { flip, curry } from '../__internal__/fp';
     import _${name} from '../${name}';
-    
-    export default curry(function ${name} (${join(signature, ', ')}, iterable) {
-      return  _${name}(iterable, ${join(signature, ', ')});
-    })
+    export default curry(flip(_${name}));
   `);
 
   return content.replace(/^\s{0,8}/gm, '');
