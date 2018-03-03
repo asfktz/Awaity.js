@@ -6,11 +6,12 @@
   "sideEffects": false,
   "private": true,
   "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
     "build": "node scripts/build",
-    "watch": "node scripts/build --watch",
+    "build:watch": "node scripts/build --watch",
     "link": "node scripts/link",
-    "pub": "node scripts/publish",
-    "test": "jest"
+    "pub": "node scripts/publish"
   },
   "keywords": [],
   "author": "Asaf Katz",
@@ -35,9 +36,6 @@
     "lodash": "^4.17.5"
   },
   "jest": {
-    "testPathIgnorePatterns": [
-      "/__tests__/utils/",
-      "/node_modules/"
-    ]
+    "testPathIgnorePatterns": ["/__tests__/utils/", "/node_modules/"]
   }
 }

@@ -1,14 +1,9 @@
 import concurrent from './__internal__/concurrent';
 import resolveIterable from './__internal__/resolveIterable';
 import { toArray, toBoolean } from './__internal__/utils';
-import filter from './filter';
 
 export default function filterLimit(iterable, filterer, limit) {
   const resolved = {};
-
-  if (!limit || iterable.length <= limit) {
-    return filter(iterable, filterer);
-  }
 
   const promise = resolveIterable(iterable)
     .then(concurrent({

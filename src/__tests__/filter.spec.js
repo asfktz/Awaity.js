@@ -1,44 +1,23 @@
 import filter from '../filter';
-import { wait, measureTime, around } from './utils';
 
-test('should limit concurrent promises to 2', async () => {
-  const iterable = [1, 2, 3, 4, 5, 6];
-  const limit = 2;
-  const duration = 100;
-  const expectedTime = (iterable.length * duration) / limit;
-
-  const actualTime = await measureTime(async () => {
-    const results = await filter(iterable, async (i) => {
-      await wait(duration);
-      return (i <= 3);
-    }, { concurrency: limit });
-
-    expect(results).toEqual([1, 2, 3]);
-  });
-
-  expect(around(actualTime, expectedTime, 60)).toBe(true);
+test('should filter plain values', async () => {
+  const nums = await filter([1, 2, 3], i => i % 2);
+  expect(nums).toEqual([1, 3]);
 });
 
-
-test('should fail on first error ', async () => {
-  const promises = [100, 80, 50, 100, 100, 100].map((ms, i) => {
-    return wait(ms).then(() => {
-      if (i === 1 || i === 2) {
-        throw new Error(i);
-      }
-
-      return i;
-    });
-  });
-
-  let error;
-  try {
-    await filter(promises, async (i) => {
-      return i === '3';
-    });
-  } catch (_error) {
-    error = _error;
-  }
-
-  expect(error.message).toBe('2');
+test('should resolve iterable promise before reaching filterer', async () => {
+  const nums = await filter(Promise.resolve([1, 2, 3]), i => i % 2);
+  expect(nums).toEqual([1, 3]);
 });
+
+test('should resolve an array of promises before reaching filterer', async () => {
+  const promises = [1, 2, 3].map(i => Promise.resolve(i));
+  const nums = await filter(promises, i => i % 2);
+  expect(nums).toEqual([1, 3]);
+});
+
+test('should resolve filterer\'s promise', async () => {
+  const nums = await filter([1, 2, 3], i => Promise.resolve(i % 2));
+  expect(nums).toEqual([1, 3]);
+});
+

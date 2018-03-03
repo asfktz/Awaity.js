@@ -11,6 +11,7 @@ module.exports = {
     "func-names": 0,
     "no-empty-function": 0,
     "prefer-arrow-callback": 0,
+    "prefer-template": 0,
     "import/prefer-default-export": 0
   },
   "env": {
