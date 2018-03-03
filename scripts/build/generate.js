@@ -16,10 +16,10 @@ function createFPModule(name, signature) {
   }
 
   const content = (`
-    import curry2 from 'curry2';
+    import curry from '../__internal__/curry';
     import _${name} from '../${name}';
     
-    export default curry2(function ${name} (${join(signature, ', ')}, iterable) {
+    export default curry(function ${name} (${join(signature, ', ')}, iterable) {
       return  _${name}(iterable, ${join(signature, ', ')});
     })
   `);
