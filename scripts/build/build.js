@@ -3,27 +3,12 @@ const glob = util.promisify(require('glob'));
 const { join, relative } = require('path');
 const { emptyDir, write, read } = require('./fs');
 const { log } = require('../utils');
+const config = require('../../config');
 
 const copyPkgConfig = require('./copyPkgConfig');
 const transform = require('./transform');
 const { createIndexFile, createFPModule } = require('./generate');
 
-const BASE_TARGET = './packages/';
-const definitions = [
-  ['all', 1],
-  ['any', 1],
-  ['props', 1],
-  ['race', 1],
-  ['each', 2],
-  ['filter', 2],
-  ['filterLimit', 3],
-  ['map', 2],
-  ['mapLimit', 3],
-  ['mapSeries', 2],
-  ['reduce', 3],
-  ['some', 2],
-  ['flow', 2],
-];
 
 async function buildBase(targetPath, envOptions) {
   const sources = await glob('./src/**/*.js', {
@@ -40,11 +25,11 @@ async function buildBase(targetPath, envOptions) {
 async function buildFP(_basePath, envOptions) {
   const baseBase = join(_basePath, 'fp');
 
-  const indexFile = createIndexFile(definitions);
+  const indexFile = createIndexFile(config.definitions);
   await write(join(baseBase, 'index.js'), transform(indexFile, envOptions));
 
-  return Promise.all(definitions.map(async ([name, signature]) => {
-    const contents = createFPModule(name, signature);
+  return Promise.all(config.definitions.map(async ([name, argLength]) => {
+    const contents = createFPModule(name, argLength);
     const transformed = transform(contents, envOptions);
 
     return write(join(baseBase, `${name}.js`), transformed);
@@ -54,7 +39,7 @@ async function buildFP(_basePath, envOptions) {
 async function build(pkgName, envOptions) {
   log.green(`building ${pkgName}...`);
 
-  const basePath = join(BASE_TARGET, pkgName);
+  const basePath = join(config.baseTarget, pkgName);
 
   await emptyDir(basePath);
   await copyPkgConfig(basePath, pkgName);
