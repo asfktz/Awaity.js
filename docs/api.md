@@ -163,16 +163,32 @@ Resolves an *object* of promises
 </dl>
 
 
+Resoved one at a time
+```js
+const data = {
+  posts: await api.get('posts'),
+  comments: await api.get('comments'),
+  authors: await api.get('authors'),
+}
+```
+
+
+Resoved concurrently
 ```js
 import { props } from 'littlebird-es';
 
-const obj = await props({
-  a: 'one',
-  b: Promise.resolve('two'),
+const data = await props({
+  posts: api.get('posts'),
+  comments: api.get('comments'),
+  authors: api.get('authors'),
 });
 
-obj // { a: 'one', b: 'two' }
+data.posts // [...]
+data.comments // [...]
+data.posts // [...]
 ```
+
+
 
 
 ### Async.race

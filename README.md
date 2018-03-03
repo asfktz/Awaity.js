@@ -27,7 +27,7 @@ While blurbird's is 17KB min/gzip, littlebird.js takes only 2KB for the whole li
 
 * <b>Bluebird's extended Promise</b><br> While is awesome for chaining, it became less usful in light of `async` / `await`.
 
-* <b>Cancellation & Resource management</b><br> One of the main advantage of bluebird is the ability to cancel an on going promise. Since littlebird uses native promises instead, cancellation is not supported. 
+* <b>Cancellation & Resource management</b><br> One of the main advantage of bluebird is the ability to cancel an on going promise. <br> Since littlebird uses native promises instead, cancellation is not supported unfortunately. 
 
 
 ### But I really like chaining!
