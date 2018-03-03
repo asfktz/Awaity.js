@@ -1,11 +1,5 @@
 const inquirer = require('inquirer');
-// const util = require('util');
-const { execSync } = require('child_process');
-
-
-function $(command, opts) {
-  execSync(command, { stdio: 'inherit', ...opts });
-}
+const { shell, log } = require('../utils');
 
 (async () => {
   const { version } = await inquirer.prompt({
@@ -19,9 +13,18 @@ function $(command, opts) {
     ],
   });
 
-  $('npm test');
-  $(`npm version ${version}`);
-  $('npm run build');
-  $('npm publish', { cwd: './packages/littlebird' });
-  $('npm publish', { cwd: './packages/littlebird-es' });
+  log.green('running tests...');
+  shell('npm test');
+
+  log.green('bumping version...');
+  shell(`npm version ${version}`);
+
+  log.green('building...');
+  shell('npm run build');
+
+  log.green('publishing littlebird...');
+  shell('npm publish', { cwd: './packages/littlebird' });
+
+  log.green('publishing littlebird-es...');
+  shell('npm publish', { cwd: './packages/littlebird-es' });
 })();

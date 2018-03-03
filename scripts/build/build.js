@@ -2,6 +2,7 @@ const util = require('util');
 const glob = util.promisify(require('glob'));
 const { join, relative } = require('path');
 const { emptyDir, write, read } = require('./fs');
+const { log } = require('../utils');
 
 const copyPkgConfig = require('./copyPkgConfig');
 const transform = require('./transform');
@@ -48,7 +49,7 @@ async function buildFP(_basePath, envOptions) {
 }
 
 async function build(pkgName, envOptions) {
-  console.log('build npm package...', pkgName);
+  log.green('build npm package...', pkgName);
 
   const basePath = join(BASE_TARGET, pkgName);
 

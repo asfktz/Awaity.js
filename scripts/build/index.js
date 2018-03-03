@@ -1,4 +1,4 @@
-const { run } = require('../utils');
+const { run, log } = require('../utils');
 const watch = require('./watch');
 const build = require('./build');
 
@@ -8,7 +8,7 @@ run(async function () {
   await build();
 
   if (flags.includes('--watch')) {
-    console.log('start watching...');
+    log.magenta('start watching...');
     watch('./src', build);
   }
 });
