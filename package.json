@@ -1,6 +1,6 @@
 {
   "name": "awaity",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "",
   "main": "index.js",
   "sideEffects": false,
@@ -36,6 +36,9 @@
     "lodash": "^4.17.5"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/__tests__/utils/", "/node_modules/"]
+    "testPathIgnorePatterns": [
+      "/__tests__/utils/",
+      "/node_modules/"
+    ]
   }
 }
