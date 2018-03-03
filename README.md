@@ -5,40 +5,109 @@
 
 <br>
 
-### Features
-- A toolbelt for `async` / `await`, use  with functions like `map`, `reduce` & `each` with promises
-- Fine-grained concurrency control
-- Tree Shaking support, take only what you need and leave the rest.
-- It's tiny, like 2KB tiny.
-- Uses Native Promises.
-- Fully compatible with Bluebird's Collections Methods.
-
-
 
 ## Introduction
 littlebird.js is a subset of bluebird.js that focuses only on parts that relevant for `async` / `await` and reimplement those with native promises.
 
 While blurbird's is 17KB min/gzip, littlebird.js takes only 2KB for the whole lib, and since it built to support tree shaking from the ground up, you can easly pick only whats relevent for you and end up with no more than 0.5KB.
 
-### What's included?
+## What's included?
 
-* Functions like `map` & `reduce` that can handle promises in intutive way.
-* Fine-grained Concurrency control, resolve all promises at once or in series of 3? the changes is yours.
+* <b>Bluebird's powerful collections methods.</b><br> Use functions like `map`, `reduce`, `filter` & `some` to interate over promises in an intuitive way.  
 
-### Yeah, but I really like chaining!
-I feel you.
+* <b>Fine-grained Concurrency control</b><br> Resolve all promises at once or in series of 3? the choice is yours.
 
+* <b>Tree Shaking support</b><br> Take only what you need and leave the rest.
+
+* <b>FP flavor</b><br> Feel at home with partial applications? you'd like this one.
+
+* <b>Compatibility with Bluebird</b><br>
+
+## What's not?
+
+* <b>Bluebird's extended Promise</b><br> While is awesome for chaining, it became less usful in light of `async` / `await`.
+
+* <b>Cancellation & Resource management</b><br> One of the main advantage of bluebird is the ability to cancel an on going promise. Since littlebird uses native promises instead, cancellation is not supported. 
+
+
+### But I really like chaining!
+Yeah, me too, but chaining comes with a cost.
+When we import `Promise` from bluebird only to use `map` like so:
+
+```js
+
+import Promise from 'bluebird';
+
+const postsWithComments = await Promise.resolve([1,2,3])
+    .map((id) => api.getPostById(id))
+    .map(async (post) => {
+      return {
+        ...post,
+        comments: await api.getCommentsByPostId(post.id)
+      }
+    });
+```
+
+We actually end up with the entire library in our bundle.
+Thats becouse module bundler (such as webpack, rollup or parcel) can't figure out what to include and what not that way.
+
+So how can we chain without significantly increaseing our bundle size? 
+By embracing function composition instead
+
+
+Using Promiss's native chaining
+```js
+
+import { map } from 'littlebird';
+
+const postsWithComments = await Promise.resolve([1,2,3])
+    .then((ids) => map(ids, api.getPostById))
+    .then((posts) => map(posts, async (post) => ({
+      ...post,
+      comments: await api.getCommentsByPostId(post.id)
+    })))
+```
+
+With FP Mode
+```js
+
+import { map } from 'littlebird/fp';
+
+const postsWithComments = await Promise.resolve([1,2,3])
+    .then(map((id) => api.getPostById(id)))
+    .then(map(async (post) => ({
+      ...post,
+      comments: await api.getCommentsByPostId(post.id)
+    })))
+```
+
+With FP Mode + flow
+```js
+
+import { map, flow } from 'littlebird/fp';
+
+const postsWithComments = await flow([
+    map((id) => api.getPostById(id)),
+    map(async (post) => ({
+      ...post,
+      comments: await api.getCommentsByPostId(post.id)
+    }))
+], [1,2,3]);
+```
+
+
+Complex example with promise chain
 
 ```js
 
 import { flow, map, reduce, props } from 'littlebird-es/fp';
 
 const posts = await Promise.resolve([1,2,3])
-    .then(map((id) => api.get('posts', id)))
+    .then(map((id) => api.getPostById(id)))
     .then(map((post) => props({
         ...post,
-        user: api.get('users', post.userId),
-        comments: api.get('posts', post.id, 'comments'),
+        user: api.getUserById(post.userId),
+        comments: api.getCommentsByPostId(post.id),
     })))
     .then(reduce(async (results, post) => ({
         ...results,
@@ -47,14 +116,15 @@ const posts = await Promise.resolve([1,2,3])
 
 ```
 
+Complex example with flow
 
 ```js
 const posts = await flow([
-    map(id => api.get('posts', id)),
+    map(id => api.getPostById(id)),
     map(post => props({
       ...post,
-      user: api.get('users', post.userId),
-      comments: api.get('posts', post.id, 'comments'),
+      user: api.getUserById(post.userId),
+      comments: api.getCommentsByPostId(post.id),
     })),
     reduce(async (results, post) => ({
       ...results,
@@ -62,6 +132,7 @@ const posts = await flow([
     }), {})
 ], [1, 2, 3]);
 ```
+
 ## Installation
 ```js
 npm install littlebird
@@ -70,38 +141,76 @@ npm install littlebird
 ## Usage
 
 ```js
-import * as Async from 'littlebird';
-````
+import Async from 'littlebird-es';
+```
+
+```js
+import Async from 'littlebird';
+```
 
 Or, take only what you need
 
 ```js
-import { map as mapAsync } from 'littlebird';
+import { map as mapAsync } from 'littlebird-es';
 ```
 ```js
 import mapAsync from 'littlebird/map';
 ```
 
+
+FP
+
+```js
+import { map } from 'littlebird-es/fp';
+```
+
+
 ## API
-Documentation is still a work in progress, but since the API is fully compitable with Bluebird's Collections methods, you can read about them there.
 
 ### Collections
-* all
-* any
-* each
-* filter
-* filterLimit
-* map
-* mapLimit
-* mapSeries
-* props
-* race
-* reduce
-* some
+* [all](/docs/api#all)
+* [any](/docs/api#any)
+* [each](/docs/api#each)
+* [filter](/docs/api#filter)
+* [filterLimit](/docs/api#filterLimit)
+* [map](/docs/api#map)
+* [mapLimit](/docs/api#mapLimit)
+* [mapSeries](/docs/api#mapSeries)
+* [props](/docs/api#props)
+* [race](/docs/api#race)
+* [reduce](/docs/api#reduce)
+* [some](/docs/api#some)
 
 ### Utilities
-* flow
+* [flow](/docs/api#flow)
 
+### FP Mode
+Each module also has an equivalate currird version under the `fp` namespace
 
-## Credits
-Todo
+```js
+import { reduce } from 'littlebird-es/fp';
+
+const sum =  reduce((total, i) => total + i, 0);
+
+const total = await sum(promises);
+```
+
+Note: in FP mode, the first argument (the iterable, or promises) is always the last argument.
+
+```js
+// Normal mode
+
+import { reduce, map, mapLimit } from 'littlebird-es';
+
+reduce(iterable, reducer, initialValue);
+map(iterable, mapper);
+mapLimit(iterable, mapper, limit);
+
+// FP mode
+
+import { reduce, map, mapLimit } from 'littlebird-es/fp';
+
+reduce(reducer, initialValue, iterable);
+map(mapper, iterable);
+mapLimit(mapper, limit, iterable);
+```
