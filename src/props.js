@@ -1,3 +1,10 @@
+/**
+  @module collections
+*/
+
+/**
+ * @function props
+ */
 export default function props(obj) {
   const keys = Object.keys(obj);
   const values = Object.values(obj);

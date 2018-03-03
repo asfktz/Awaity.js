@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
-const { shell, log } = require('../utils');
+const shell = require('../utils/shell');
+const log = require('../utils/log');
 
 (async () => {
   const { version } = await inquirer.prompt({

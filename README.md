@@ -28,42 +28,6 @@ While blurbird's is 17KB min/gzip, littlebird.js takes only 2KB for the whole li
 ### Yeah, but I really like chaining!
 I feel you.
 
-```js
-
-const posts = await Async.chain([1,2,3])
-    .map((id) => api.get('posts', id))
-    .map((post) => Async.props({
-        ...post,
-        user: api.get('users', post.userId),
-        comments: api.get('posts', post.id, 'comments'),
-    }))
-    .reduce(async (results, post) => ({
-        ...results,
-        [post.id]: post
-    }))
-    .promise();
-
-```
-
-```js
-
-import { flow, map, reduce, props } from 'littlebird-es/fp';
-
-const posts = await flow([
-    map((id) => api.get('posts', id)),
-    map((post) => props({
-        ...post,
-        user: api.get('users', post.userId),
-        comments: api.get('posts', post.id, 'comments'),
-    })),
-    reduce(async (results, post) => ({
-        ...results,
-        [post.id]: post
-    }))
-], [1,2,3]);
-
-```
-
 
 ```js
 
@@ -83,6 +47,21 @@ const posts = await Promise.resolve([1,2,3])
 
 ```
 
+
+```js
+const posts = await flow([
+    map(id => api.get('posts', id)),
+    map(post => props({
+      ...post,
+      user: api.get('users', post.userId),
+      comments: api.get('posts', post.id, 'comments'),
+    })),
+    reduce(async (results, post) => ({
+      ...results,
+      [post.id]: post
+    }), {})
+], [1, 2, 3]);
+```
 ## Installation
 ```js
 npm install littlebird

@@ -1,4 +1,3 @@
-
 const join = (arr, sep) => arr.join(sep);
 const trim = str => str.replace(/^\s{0,8}/gm, '').trim();
 

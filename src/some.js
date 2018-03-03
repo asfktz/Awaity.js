@@ -1,6 +1,13 @@
+/**
+  @module collections
+*/
+
 import concurrent from './__internal__/concurrent';
 import { toArray, size } from './__internal__/utils';
 
+/**
+ * @function some
+ */
 export default function some(iterable, total) {
   const resolved = {};
 

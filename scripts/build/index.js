@@ -1,5 +1,6 @@
-const { run, log } = require('../utils');
-const watch = require('./watch');
+const log = require('../utils/log');
+const run = require('../utils/run');
+const watch = require('../utils/watch');
 const build = require('./build');
 
 run(async function () {
