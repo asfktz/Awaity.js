@@ -19,7 +19,6 @@ const { shell, log } = require('../utils');
   log.green('bumping version...');
   shell(`npm version ${version}`);
 
-  log.green('building...');
   shell('npm run build');
 
   log.green('publishing littlebird...');

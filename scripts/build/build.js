@@ -49,7 +49,7 @@ async function buildFP(_basePath, envOptions) {
 }
 
 async function build(pkgName, envOptions) {
-  log.green('build npm package...', pkgName);
+  log.green(`building ${pkgName}...`);
 
   const basePath = join(BASE_TARGET, pkgName);
 
