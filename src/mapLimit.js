@@ -1,15 +1,8 @@
-/**
-  @module collections
-*/
-
 import concurrent from './__internal__/concurrent';
 import resolveIterable from './__internal__/resolveIterable';
 import { toArray, identity } from './__internal__/utils';
 import map from './map';
 
-/**
- * @function mapLimit
- */
 export default function mapLimit(iterable, mapper = identity, limit) {
   const resolved = {};
 

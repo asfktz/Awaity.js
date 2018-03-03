@@ -12,9 +12,7 @@
     "build": "node scripts/build",
     "build:watch": "node scripts/build --watch",
     "link": "node scripts/link",
-    "pub": "node scripts/publish",
-    "docs": "node scripts/docs",
-    "docs:watch": "node scripts/docs --watch"
+    "pub": "node scripts/publish"
   },
   "keywords": [],
   "author": "Asaf Katz",
@@ -27,7 +25,6 @@
     "babel-preset-env": "^1.6.1",
     "chalk": "^2.3.2",
     "chokidar": "^2.0.2",
-    "docdash": "^0.4.0",
     "eslint": "^4.18.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",
@@ -37,7 +34,6 @@
     "glob": "^7.1.2",
     "inquirer": "^5.1.0",
     "jest": "^22.4.2",
-    "jsdoc": "^3.5.5",
     "lodash": "^4.17.5"
   },
   "jest": {

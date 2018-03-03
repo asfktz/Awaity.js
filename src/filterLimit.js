@@ -1,14 +1,7 @@
-/**
-  @module collections
-*/
-
 import concurrent from './__internal__/concurrent';
 import resolveIterable from './__internal__/resolveIterable';
 import { toArray, toBoolean } from './__internal__/utils';
 
-/**
- * @function filterLimit
- */
 export default function filterLimit(iterable, filterer, limit) {
   const resolved = {};
 
