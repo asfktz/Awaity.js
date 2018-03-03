@@ -168,18 +168,18 @@ import { map } from 'littlebird-es/fp';
 ## API
 
 ### Collections
-* [all](/docs/api#all)
-* [any](/docs/api#any)
-* [each](/docs/api#each)
-* [filter](/docs/api#filter)
-* [filterLimit](/docs/api#filterLimit)
-* [map](/docs/api#map)
-* [mapLimit](/docs/api#mapLimit)
-* [mapSeries](/docs/api#mapSeries)
-* [props](/docs/api#props)
-* [race](/docs/api#race)
-* [reduce](/docs/api#reduce)
-* [some](/docs/api#some)
+* [all](/docs/api.md#all)
+* [any](/docs/api.md#any)
+* [each](/docs/api.md#each)
+* [filter](/docs/api.md#filter)
+* [filterLimit](/docs/api.md#filterLimit)
+* [map](/docs/api.md#map)
+* [mapLimit](/docs/api.md#mapLimit)
+* [mapSeries](/docs/api.md#mapSeries)
+* [props](/docs/api.md#props)
+* [race](/docs/api.md#race)
+* [reduce](/docs/api.md#reduce)
+* [some](/docs/api.md#some)
 
 ### Utilities
 * [flow](/docs/api#flow)
