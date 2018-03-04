@@ -83,7 +83,7 @@ const postsWithComments = await Promise.resolve([1,2,3])
     })))
 ```
 
-Second, we'll use 'littlebird/fp' flavor:
+Second, we'll use `littlebird/fp` flavor:
 ```js
 
 import { map } from 'littlebird/fp';
@@ -115,7 +115,7 @@ Complex example with promise chain
 
 ```js
 
-import { flow, map, reduce, props } from 'littlebird-es/fp';
+import { map, reduce, props } from 'littlebird-es/fp';
 
 const posts = await Promise.resolve([1,2,3])
     .then(map((id) => api.getPostById(id)))
@@ -134,6 +134,8 @@ const posts = await Promise.resolve([1,2,3])
 Complex example with flow
 
 ```js
+import { flow, map, reduce, props } from 'littlebird-es/fp';
+
 const posts = await flow([
     map(id => api.getPostById(id)),
     map(post => props({
