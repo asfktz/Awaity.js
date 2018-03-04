@@ -11,6 +11,17 @@ littlebird.js is a subset of bluebird.js that focuses only on parts that relevan
 
 While blurbird's is around 17KB min/gzip, littlebird.js takes only 2KB for the whole lib, and since it built to support [tree&nbsp;shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) from the ground up, you can easly pick only whats relevent for you and end up with no more than 0.5KB.
 
+```js
+import { map } from 'littlebird-es';
+
+const tasks = map([1,2,3], async (id) => {
+    const res = await fetch(id);
+    return res.json();
+});
+
+tasks // [{...}, {...}, {...}]
+```
+
 ## What's included?
 
 * <b>Bluebird's powerful collections methods.</b><br> Use functions like `map`, `reduce`, `filter` & `some` to interate over promises in an intuitive way.  
@@ -25,14 +36,14 @@ While blurbird's is around 17KB min/gzip, littlebird.js takes only 2KB for the w
 
 ## What's not?
 
-* <b>Bluebird's extended Promise</b><br> While is awesome for chaining, it became less usful in light of `async` / `await`.
+* <b>Bluebird's extended Promise</b><br> While its awesome for chaining, it became less usful in light of `async` / `await`.
 
 * <b>Cancellation & Resource management</b><br> One of the main advantage of bluebird is the ability to cancel an on going promise. <br> Since littlebird uses native promises instead, cancellation is not supported unfortunately. 
 
 
 ### But I really like chaining!
-Yeah, me too, but chaining comes with a cost.
-When we import `Promise` from bluebird only to use `map` like so:
+Yeah, me too, but chaining comes with a cost. <br>
+For example, when you import `Promise` from bluebird only to use `map` like so:
 
 ```js
 
@@ -48,8 +59,9 @@ const postsWithComments = await Promise.resolve([1,2,3])
     });
 ```
 
-We actually end up with the entire library in our bundle.
-Thats becouse module bundler (such as webpack, rollup or parcel) can't figure out what to include and what not that way.
+You actually end up with the entire library in our bundle.
+That's also true for `import { map } from 'bluebird'` since you get an instance of a bluebird's promise with whole the methods on it.
+
 
 So how can we chain without significantly increaseing our bundle size? 
 By embracing function composition instead
