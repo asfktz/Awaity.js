@@ -59,15 +59,18 @@ const postsWithComments = await Promise.resolve([1,2,3])
     });
 ```
 
-You actually end up with the entire library in our bundle.
+You actually end up with the entire library in our bundle. <br>
 That's also true for `import { map } from 'bluebird'` since you get an instance of a bluebird's promise with whole the methods on it.
 
 
 So how can we chain without significantly increaseing our bundle size? 
-By embracing function composition instead
 
+By embracing function composition instead!
 
-Using Promiss's native chaining
+Lets see how:
+
+First, we can leverage Promise's chaining feature:
+
 ```js
 
 import { map } from 'littlebird';
@@ -80,7 +83,7 @@ const postsWithComments = await Promise.resolve([1,2,3])
     })))
 ```
 
-With FP Mode
+Second, we'll use 'littlebird/fp' flavor:
 ```js
 
 import { map } from 'littlebird/fp';
