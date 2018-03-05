@@ -1,11 +1,11 @@
 import concurrent from './__internal__/concurrent';
-import resolveIterable from './__internal__/resolveAll';
+import resolveAll from './__internal__/resolveAll';
 import { toArray, toBoolean } from './__internal__/utils';
 
 export default function filterLimit(iterable, filterer, limit) {
   const resolved = {};
 
-  const promise = resolveIterable(iterable)
+  return resolveAll(iterable)
     .then(concurrent({
       limit: limit,
       onResolved(value, key, values) {
@@ -14,16 +14,16 @@ export default function filterLimit(iterable, filterer, limit) {
           .then(toBoolean)
           .then((bool) => {
             if (bool) {
+              // console.log(key, value);
               resolved[key] = value;
             }
           });
       },
       onCompleted: done => (count, values) => {
         if (count === values.length) {
+          debugger
           done(toArray(resolved));
         }
       },
     }));
-
-  return promise.then(() => toArray(resolved));
 }

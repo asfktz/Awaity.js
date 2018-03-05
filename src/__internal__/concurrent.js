@@ -55,6 +55,8 @@ export default function concurrent(_options) {
     }
 
     function onCompleted() {
+      count += 1;
+
       if (options.breakOnError && errors.length) {
         throws(errors[0]);
         return;
@@ -65,15 +67,12 @@ export default function concurrent(_options) {
 
     function onRejected(error) {
       if (fulfilled) { return; }
-      count += 1;
       errors = errors.concat(error);
       return options.onRejected(error);
     }
 
     function onResolved(value, key) {
       if (fulfilled) { return; }
-      count += 1;
-
       return options.onResolved(value, key, values, count);
     }
 

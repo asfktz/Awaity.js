@@ -24,7 +24,7 @@ test('should resolve filterer\'s promise', async () => {
   expect(nums).toEqual([1, 3]);
 });
 
-test('Realworld | should return a list of direcrories', async () => {
+test('Real World | should return a list of direcrories', async () => {
   async function oldSchollGetDirectories(path) {
     const files = await fs.readdir(path);
     const pairs = await Promise.all(files.map(async (file) => {
