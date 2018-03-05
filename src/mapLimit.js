@@ -15,10 +15,10 @@ export default function mapLimit(iterable, mapper = identity, limit) {
       limit: limit,
       breakOnError: true,
       transform: mapper,
-      onResolved(value, key) {
+      onItemResolved(value, key) {
         resolved[key] = value;
       },
-      onCompleted: done => (count, values) => {
+      onItemCompleted: done => (count, values) => {
         if (count === values.length) {
           done(toArray(resolved));
         }

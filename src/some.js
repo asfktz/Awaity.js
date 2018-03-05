@@ -7,12 +7,10 @@ export default function some(iterable, total) {
   return Promise.resolve(iterable)
     .then(concurrent({
       breakOnError: false,
-      onResolved(value, key, values, count) {
-        if (count <= total) {
-          resolved[key] = value;
-        }
+      onItemResolved(value, key) {
+        resolved[key] = value;
       },
-      onCompleted: (done, throws) => (count, values, errors) => {
+      onItemCompleted: (done, throws) => (count, values, errors) => {
         const tooManyFails = (values.length - errors.length) <= total;
 
         if (tooManyFails) {

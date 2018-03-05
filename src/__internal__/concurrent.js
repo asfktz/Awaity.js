@@ -5,9 +5,9 @@ function run(...args) {
     iterator,
     isFulfilled,
     transform,
-    onResolved,
-    onRejected,
-    onCompleted,
+    onItemResolved,
+    onItemRejected,
+    onItemCompleted,
   ] = args;
 
   const iteration = iterator.next();
@@ -17,10 +17,10 @@ function run(...args) {
   const [key, value] = iteration.value;
 
   transform(value, key)
-    .then(resolved => onResolved(resolved, key))
-    .catch(error => onRejected(error, key))
+    .then(resolved => onItemResolved(resolved, key))
+    .catch(error => onItemRejected(error, key))
     .then(() => {
-      onCompleted();
+      onItemCompleted();
       run(...args);
     });
 }
@@ -31,9 +31,9 @@ export default function concurrent(_options) {
       limit: values.length,
       breakOnError: true,
       transform: identity,
-      onCompleted: () => noop,
-      onResolved: noop,
-      onRejected: noop,
+      onItemCompleted: () => noop,
+      onItemResolved: noop,
+      onItemRejected: noop,
     });
 
     let count = 0;
@@ -54,7 +54,7 @@ export default function concurrent(_options) {
       fulfilled = true;
     }
 
-    function onCompleted() {
+    function onItemCompleted() {
       count += 1;
 
       if (options.breakOnError && errors.length) {
@@ -62,31 +62,31 @@ export default function concurrent(_options) {
         return;
       }
 
-      options.onCompleted(done, throws)(count, values, errors);
+      options.onItemCompleted(done, throws)(count, values, errors);
     }
 
-    function onRejected(error) {
+    function onItemRejected(error) {
       if (fulfilled) { return; }
       errors = errors.concat(error);
-      return options.onRejected(error);
+      return options.onItemRejected(error);
     }
 
-    function onResolved(value, key) {
+    function onItemResolved(value, key) {
       if (fulfilled) { return; }
-      return options.onResolved(value, key, values, count);
+      return options.onItemResolved(value, key, values);
     }
 
     const transform = (value, key) => {
-      return Promise.resolve(options.transform(value, key, values, count));
+      return Promise.resolve(options.transform(value, key, values));
     };
 
     repeat(options.limit, () => run(
       iterator,
       isFulfilled,
       transform,
-      onResolved,
-      onRejected,
-      onCompleted,
+      onItemResolved,
+      onItemRejected,
+      onItemCompleted,
     ));
   });
 }

@@ -7,10 +7,10 @@ export default function any(iterable) {
   return Promise.resolve(iterable)
     .then(concurrent({
       breakOnError: false,
-      onResolved(value) {
+      onItemResolved(value) {
         winner = value;
       },
-      onCompleted: (done, throws) => (count, values, errors) => {
+      onItemCompleted: (done, throws) => (count, values, errors) => {
         if (winner) {
           done(winner);
         } else if (errors.length === values.length) {
