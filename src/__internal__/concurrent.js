@@ -14,7 +14,8 @@ function run(...args) {
 
   if (iteration.done || isFulfilled()) return;
 
-  const [key, value] = iteration.value;
+  const key = iteration.value[0];
+  const value = iteration.value[1];
 
   transform(value, key)
     .then(resolved => onItemResolved(resolved, key))
