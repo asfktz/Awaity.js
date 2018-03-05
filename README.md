@@ -6,61 +6,93 @@
 <br>
 
 
-## Introduction
-littlebird.js is a subset of bluebird.js that focuses only on whats relevant for `async` / `await` <br> and reimplement using native promises.
+## Features
 
-That grealty reduce the library footprint, while blurbird's is 17KB min/gzip, littlebird.js takes only 2KB for the whole lib, and since it built to support tree shaking from the ground up, you can easly pick only whats relevent for you and end up with no more than 0.5KB.
+* <b>Functional utility library for `async` / `await` </b><br> Think `lodash` for promises.
 
-## What's included?
-
-* <b>Bluebird's powerful collections methods.</b><br> Use functions like `map`, `reduce`, `filter` & `some` to interate over promises in an intuitive way.  
+* <b>Bluebird's powerful collections methods, but with native promises.</b><br> Use functions like `map`, `reduce`, `filter` & `some` to interate over promises in an intuitive way.
 
 * <b>Fine-grained Concurrency control</b><br> Resolve all promises at once or in series of 3? the choice is yours.
 
-* <b>Tree Shaking support</b><br> Take only what you need and leave the rest.
+* <b>Built to support Tree Shaking from the ground up</b><br> Take what you need leave the rest.
 
-* <b>Functional Composition</b><br> Similar to lodash, littlebird comes with an `FP` flavor, which exposes a curried equivalent for each function
-
-
-* <b>Compatibility with Bluebird</b><br>
-
-## What's not?
-
-* <b>Bluebird's extended Promise</b><br> While its awesome for chaining, it became less usful in light of `async` / `await`.
-
-* <b>Cancellation & Resource management</b><br> One of the main advantage of bluebird is the ability to cancel an on going promise. <br> Since littlebird uses native promises instead, cancellation is unfortunately not supported. 
+* <b>Two flavors: Regular & FP style</b><br> Similar to `lodash/fp`, Awaity.js comes with additional flavor for more functional programming (FP) friendly style. <br> If it speaks your language, try `awaity/fp`.
 
 
-### But I really like chaining!
-Yeah, me too, but chaining comes with a cost.
 
-For example, in bluebird, When we import `Promise` from bluebird only to use `map` like so:
+## Introduction
+Awaity.js is a subset of bluebird.js that focuses only on whats relevant for `async` / `await` while using native promises instead, the result is a functional utilty library with minimal footprint. much like lodash, but for promises.
+
+That grealty reduce the library footprint, while blurbird's is 17KB min/gzip, Awaity.js takes only 2KB for the whole lib, and since it built to support [tree&nbsp;shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) from the ground up, you can easly pick only whats relevent to you and end up with no more than 0.5KB.
+
 
 ```js
+import { map } from 'awaity-es';
 
-import Promise from 'bluebird';
+const tasks = map([1,2,3], async (id) => {
+    const res = await fetch(id);
+    return res.json();
+});
 
-const postsWithComments = await Promise.resolve([1,2,3])
-    .map((id) => api.getPostById(id))
-    .map(async (post) => {
-      return {
-        ...post,
-        comments: await api.getCommentsByPostId(post.id)
-      }
-    });
+tasks // [{...}, {...}, {...}]
 ```
 
-We actually end up with the entire library in our bundle.
-Thats becouse module bundler (such as webpack, rollup or parcel) can't figure out what to include and what not that way.
 
-So how can we chain without significantly increaseing our bundle size? 
-By embracing function composition instead
+## Installation
+```bash
+npm install awaity
+
+```
+
+Or, with ES modules and tree shaking support
+
+```bash
+npm install awaity-es
+```
+
+## Usage
+
+```js
+import Async from 'awaity';
+```
+
+Take only what you need
+
+```js
+import map from 'awaity/map';
+import reduce from 'awaity/reduce';
+import some from 'awaity/some';
+```
+
+Or, If you'r using `awaity-es`:
+```js
+import { map } from 'awaity-es';
+
+// that will also work
+import map from 'awaity-es/map';
+```
 
 
-Using Promiss's native chaining
+FP flavor
+
+```js
+import { reduce } from 'awaity-es/fp';
+
+const sum = reduce((total, i) => total + i, 0);
+
+const total = sum([1,2,3]);
+```
+
+
+
+### Chaining
+Awaity.js provides three diffrent kinds of chaining to choose from:
+
+### By leveraging Promise's native `then` chainig feature:
+
 ```js
 
-import { map } from 'littlebird';
+import { map } from 'awaity';
 
 const postsWithComments = await Promise.resolve([1,2,3])
     .then((ids) => map(ids, api.getPostById))
@@ -70,10 +102,11 @@ const postsWithComments = await Promise.resolve([1,2,3])
     })))
 ```
 
-With FP Mode
+#### `then` With, `awaity/fp`:
+
 ```js
 
-import { map } from 'littlebird/fp';
+import { map } from 'awaity/fp';
 
 const postsWithComments = await Promise.resolve([1,2,3])
     .then(map((id) => api.getPostById(id)))
@@ -83,26 +116,11 @@ const postsWithComments = await Promise.resolve([1,2,3])
     })))
 ```
 
-With FP Mode + flow
-```js
-
-import { map, flow } from 'littlebird/fp';
-
-const postsWithComments = await flow([
-    map((id) => api.getPostById(id)),
-    map(async (post) => ({
-      ...post,
-      comments: await api.getCommentsByPostId(post.id)
-    }))
-], [1,2,3]);
-```
-
-
 Complex example with promise chain
 
 ```js
 
-import { flow, map, reduce, props } from 'littlebird-es/fp';
+import { map, reduce, props } from 'awaity/fp';
 
 const posts = await Promise.resolve([1,2,3])
     .then(map((id) => api.getPostById(id)))
@@ -118,9 +136,42 @@ const posts = await Promise.resolve([1,2,3])
 
 ```
 
+### Using `flow`
+
+```js
+
+import { map, flow } from 'awaity';
+
+const postsWithComments = await flow([1,2,3], [
+    (ids) => map(ids, (id) => api.getPostById(id)),
+    (posts) => map(posts, async (post) => ({
+      ...post,
+      comments: await api.getCommentsByPostId(post.id)
+    }))
+]);
+```
+
+
+#### Using `flow` + `awaity/fp`
+```js
+
+import { map, flow } from 'awaity/fp';
+
+const postsWithComments = await flow([
+    map(ids, (id) => api.getPostById(id)),
+    map(posts, async (post) => ({
+      ...post,
+      comments: await api.getCommentsByPostId(post.id)
+    })
+], [1,2,3]);
+```
+
+
 Complex example with flow
 
 ```js
+import { flow, map, reduce, props } from 'awaity-es/fp';
+
 const posts = await flow([
     map(id => api.getPostById(id)),
     map(post => props({
@@ -135,36 +186,49 @@ const posts = await flow([
 ], [1, 2, 3]);
 ```
 
-## Installation
+
+### Using `chain`:
 ```js
-npm install littlebird
+
+import { chain } from 'awaity/fp';
+
+const postsWithComments = await chain([1,2,3])
+  .map(ids, (id) => api.getPostById(id))
+  .map(posts, async (post) => ({
+    ...post,
+    comments: await api.getCommentsByPostId(post.id)
+  })
+  .promise()
 ```
 
-## Usage
-
+#### Create your own chain:
 ```js
-import Async from 'littlebird-es';
+/* ./myChain.js */
+
+import { createChain, map, reduce } from 'awaity/fp';
+
+export default createChain({ map, reduce });
 ```
 
 ```js
-import Async from 'littlebird';
+/* ./app.js */
+
+import chain from './myChain.js';
+
+const postsWithComments = await chain([1,2,3])
+  .map(id => api.getPostById(id))
+  .map(post => props({
+    ...post,
+    user: api.getUserById(post.userId),
+    comments: api.getCommentsByPostId(post.id),
+  }))
+  .reduce(async (results, post) => ({
+    ...results,
+    [post.id]: post
+  }), {})
+  .promise()
 ```
 
-Or, take only what you need
-
-```js
-import { map as mapAsync } from 'littlebird-es';
-```
-```js
-import mapAsync from 'littlebird/map';
-```
-
-
-FP
-
-```js
-import { map } from 'littlebird-es/fp';
-```
 
 
 ## API
@@ -190,7 +254,7 @@ import { map } from 'littlebird-es/fp';
 Each module also has an equivalate currird version under the `fp` namespace
 
 ```js
-import { reduce } from 'littlebird-es/fp';
+import { reduce } from 'awaity-es/fp';
 
 const sum =  reduce((total, i) => total + i, 0);
 
@@ -202,7 +266,7 @@ Note: in FP mode, the first argument (the iterable, or promises) is always the l
 ```js
 // Normal mode
 
-import { reduce, map, mapLimit } from 'littlebird-es';
+import { reduce, map, mapLimit } from 'awaity-es';
 
 reduce(iterable, reducer, initialValue);
 map(iterable, mapper);
@@ -210,7 +274,7 @@ mapLimit(iterable, mapper, limit);
 
 // FP mode
 
-import { reduce, map, mapLimit } from 'littlebird-es/fp';
+import { reduce, map, mapLimit } from 'awaity-es/fp';
 
 reduce(reducer, initialValue, iterable);
 map(mapper, iterable);
