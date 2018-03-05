@@ -7,9 +7,9 @@
 
 
 ## Introduction
-littlebird.js is a subset of bluebird.js that focuses only on parts that relevant for `async` / `await` and reimplement those with native promises.
+littlebird.js is a subset of bluebird.js that focuses only on whats relevant for `async` / `await` <br> and reimplement using native promises.
 
-While blurbird's is 17KB min/gzip, littlebird.js takes only 2KB for the whole lib, and since it built to support tree shaking from the ground up, you can easly pick only whats relevent for you and end up with no more than 0.5KB.
+That grealty reduce the library footprint, while blurbird's is 17KB min/gzip, littlebird.js takes only 2KB for the whole lib, and since it built to support tree shaking from the ground up, you can easly pick only whats relevent for you and end up with no more than 0.5KB.
 
 ## What's included?
 
@@ -19,20 +19,22 @@ While blurbird's is 17KB min/gzip, littlebird.js takes only 2KB for the whole li
 
 * <b>Tree Shaking support</b><br> Take only what you need and leave the rest.
 
-* <b>FP flavor</b><br> Feel at home with partial applications? you'd like this one.
+* <b>Functional Composition</b><br> Similar to lodash, littlebird comes with an `FP` flavor, which exposes a curried equivalent for each function
+
 
 * <b>Compatibility with Bluebird</b><br>
 
 ## What's not?
 
-* <b>Bluebird's extended Promise</b><br> While is awesome for chaining, it became less usful in light of `async` / `await`.
+* <b>Bluebird's extended Promise</b><br> While its awesome for chaining, it became less usful in light of `async` / `await`.
 
-* <b>Cancellation & Resource management</b><br> One of the main advantage of bluebird is the ability to cancel an on going promise. <br> Since littlebird uses native promises instead, cancellation is not supported unfortunately. 
+* <b>Cancellation & Resource management</b><br> One of the main advantage of bluebird is the ability to cancel an on going promise. <br> Since littlebird uses native promises instead, cancellation is unfortunately not supported. 
 
 
 ### But I really like chaining!
 Yeah, me too, but chaining comes with a cost.
-When we import `Promise` from bluebird only to use `map` like so:
+
+For example, in bluebird, When we import `Promise` from bluebird only to use `map` like so:
 
 ```js
 
