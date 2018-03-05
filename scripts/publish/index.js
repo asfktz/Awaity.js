@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const shell = require('../utils/shell');
 const log = require('../utils/log');
+const { name } = require('../../package.json');
 
 (async () => {
   const { version } = await inquirer.prompt({
@@ -22,9 +23,9 @@ const log = require('../utils/log');
 
   shell('npm run build');
 
-  log.green('publishing littlebird...');
-  shell('npm publish', { cwd: './packages/littlebird' });
+  log.green(`publishing ${name}...`);
+  shell('npm publish', { cwd: `./packages/${name}` });
 
-  log.green('publishing littlebird-es...');
-  shell('npm publish', { cwd: './packages/littlebird-es' });
+  log.green(`publishing ${name}-es...`);
+  shell('npm publish', { cwd: `./packages/${name}-es` });
 })();

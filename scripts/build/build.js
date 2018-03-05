@@ -1,14 +1,14 @@
 const util = require('util');
 const glob = util.promisify(require('glob'));
 const { join, relative } = require('path');
-const { emptyDir, write, read } = require('./fs');
-const { log } = require('../utils');
+const { emptyDir, write, writeJson, read } = require('./fs');
+const log = require('../utils/log');
 const config = require('../../config');
+const pkgJSON = require('../../package.json');
 
-const copyPkgConfig = require('./copyPkgConfig');
+const preparePkgJSON = require('./preparePkgJSON');
 const transform = require('./transform');
 const { createIndexFile, createFPModule } = require('./generate');
-
 
 async function buildBase(targetPath, envOptions) {
   const sources = await glob('./src/**/*.js', {
@@ -36,21 +36,28 @@ async function buildFP(_basePath, envOptions) {
   }));
 }
 
+function savePkgJSON(pkgJSON, targetPath, pkgName) {
+  const path = join(targetPath, './package.json');
+  const config = preparePkgJSON(pkgJSON, pkgName);
+  return writeJson(path, config, { spaces: '  ' });
+}
+
 async function build(pkgName, envOptions) {
   log.green(`building ${pkgName}...`);
 
   const basePath = join(config.baseTarget, pkgName);
 
   await emptyDir(basePath);
-  await copyPkgConfig(basePath, pkgName);
 
   await Promise.all([
+    savePkgJSON(pkgJSON, basePath, pkgName),
     buildBase(basePath, envOptions),
     buildFP(basePath, envOptions),
   ]);
 }
 
 module.exports = async function () {
-  await build('littlebird-es', { modules: false });
-  await build('littlebird', { modules: 'commonjs' });
+  const { name } = pkgJSON;
+  await build(`${name}-es`, { modules: false });
+  await build(`${name}`, { modules: 'commonjs' });
 };

@@ -1,9 +1,11 @@
-const { shell, log } = require('./utils');
+const shell = require('./utils/shell');
+const log = require('./utils/log');
+const { name } = require('../package.json');
 
 function link(pkgName) {
   log.green(`linking ${pkgName}...`);
   shell('npm link', { ctx: `./src/packages/${pkgName}` });
 }
 
-link('littlebird');
-link('littlebird-es');
+link(name);
+link(`${name}-es`);

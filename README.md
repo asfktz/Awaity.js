@@ -64,16 +64,14 @@ import reduce from 'awaity/reduce';
 import some from 'awaity/some';
 ```
 
-Or, If you'r using `awaity-es`:
-```js
-import { map } from 'awaity-es';
+Or, If you'r using `awaity-es`, you can benefit from tree shaking.
 
-// that will also work
-import map from 'awaity-es/map';
+```js
+import { map, reduce, some } from 'awaity-es';
 ```
 
 
-FP flavor
+FP flavor is available under the `fp` submodule:
 
 ```js
 import { reduce } from 'awaity-es/fp';
@@ -88,28 +86,28 @@ const total = sum([1,2,3]);
 ### Chaining
 Awaity.js provides three diffrent kinds of chaining to choose from:
 
-### By leveraging Promise's native `then` chainig feature:
+### By leveraging Promise's native chainig feature:
 
 ```js
 
 import { map } from 'awaity';
 
 const postsWithComments = await Promise.resolve([1,2,3])
-    .then((ids) => map(ids, api.getPostById))
+    .then((ids) => map(ids, (id) => api.getPostById(id)))
     .then((posts) => map(posts, async (post) => ({
       ...post,
       comments: await api.getCommentsByPostId(post.id)
     })))
 ```
 
-#### `then` With, `awaity/fp`:
+#### native chainig feature +  `awaity/fp`:
 
 ```js
 
 import { map } from 'awaity/fp';
 
 const postsWithComments = await Promise.resolve([1,2,3])
-    .then(map((id) => api.getPostById(id)))
+    .then(map((id) => api.getPostById(id))
     .then(map(async (post) => ({
       ...post,
       comments: await api.getCommentsByPostId(post.id)
@@ -137,6 +135,7 @@ const posts = await Promise.resolve([1,2,3])
 ```
 
 ### Using `flow`
+Flow is a utility to supprt 
 
 ```js
 
