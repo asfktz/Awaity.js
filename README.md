@@ -16,7 +16,7 @@
 
 * <b>Built to support Tree Shaking from the ground up</b><br> Take what you need leave the rest.
 
-* <b>Two flavors: Regular & FP style</b><br> Similar to `lodash/fp`, Awaity.js comes with additional flavor for more functional programming (FP) friendly style. <br> If it speaks your language, try `awaity/fp`.
+* <b>Two flavors: Regular & FP style</b><br> Similar to `lodash/fp`, Awaity.js comes with additional flavor to support functional composition. <br> If it speaks your language, try `awaity/fp`.
 
 
 
