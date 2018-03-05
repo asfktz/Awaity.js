@@ -1,5 +1,5 @@
 import concurrent from './__internal__/concurrent';
-import resolveIterable from './__internal__/resolveIterable';
+import resolveIterable from './__internal__/resolveAll';
 import { toArray, toBoolean } from './__internal__/utils';
 
 export default function filterLimit(iterable, filterer, limit) {

@@ -59,3 +59,11 @@ test('should defaults to identity when no mapper provided', async () => {
   const results = await map([1, 2, 3]);
   expect(results).toEqual([1, 2, 3]);
 });
+
+test('should throw when dealing with non-iterable', async () => {
+  try {
+    await map(undefined);
+  } catch (err) {
+    expect(err.name).toBe('IterableError');
+  }
+});

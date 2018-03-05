@@ -1,5 +1,5 @@
 import concurrent from './__internal__/concurrent';
-import SubError from './__internal__/SubError';
+import { SubError } from './__internal__/errors';
 
 export default function any(iterable) {
   let winner;

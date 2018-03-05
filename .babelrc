@@ -1,3 +1,12 @@
 {
   presets: ['env'],
+  env: {
+    development: {
+      presets: [['env', {
+        targets: {
+          node: 'current'
+        }
+      }]]
+    }
+  }
 }

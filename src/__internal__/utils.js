@@ -27,4 +27,9 @@ export function defaults(obj, defaultObj) {
   }, initial);
 }
 
+export function isIterable(iterable) {
+  return iterable && typeof iterable.entries === 'function';
+}
+
+
 export function noop() {}

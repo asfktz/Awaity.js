@@ -16,6 +16,7 @@ module.exports = {
     "prefer-rest-params": 0,
     "prefer-destructuring": 0,
     "object-curly-newline": 0,
+    "no-underscore-dangle": 0,
     "no-shadow": 0,
     "import/prefer-default-export": 0
   },

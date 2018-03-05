@@ -22,14 +22,6 @@ test('should resolve an array of promises', async () => {
 });
 
 test('should resolve a single promise', async () => {
-  const promises = [1, 2, 3].map(i => Promise.resolve(i));
-
-  await flow(promises, [
-    (nums) => {
-      expect(nums).toEqual([1, 2, 3]);
-    },
-  ]);
-
   await flow(Promise.resolve('TEST'), [
     (val) => {
       expect(val).toEqual('TEST');

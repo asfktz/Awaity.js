@@ -1,5 +1,5 @@
 import concurrent from './__internal__/concurrent';
-import resolveIterable from './__internal__/resolveIterable';
+import resolveIterable from './__internal__/resolveAll';
 import { toArray, identity } from './__internal__/utils';
 import map from './map';
 

@@ -1,6 +1,6 @@
 import series from './__internal__/series';
-import resolveIterable from './__internal__/resolveIterable';
+import resolveAll from './__internal__/resolveAll';
 
 export default function reduce(iterable, reducer, initial) {
-  return resolveIterable(iterable).then(series(reducer, initial));
+  return resolveAll(iterable).then(series(reducer, initial));
 }
