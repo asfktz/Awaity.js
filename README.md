@@ -99,7 +99,7 @@ import { reduce } from 'awaity/esm/fp';
 // Just some promises that returns numbers
 const promises = [1,2,3].map((i) => Promise.resolve(i));
 
-// By ommiting the last arguments,
+// By ommiting the last argument,
 // we got a function that expects an array of promises
 const sum = reduce((total, i) => total + i, 0);
 
