@@ -14,10 +14,10 @@ export default function some(iterable, total) {
       onItemCompleted: (done, throws) => (count, values, errors) => {
         const tooManyFails = (values.length - errors.length) <= total;
 
-        if (tooManyFails) {
-          throws(new SubError(errors));
-        } else if (size(resolved) === total) {
+        if (size(resolved) === total) {
           done(toArray(resolved));
+        } else if (tooManyFails) {
+          throws(new SubError(errors));
         }
       },
     }));
