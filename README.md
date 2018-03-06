@@ -86,7 +86,7 @@ const total = sum([1,2,3]);
 ### Chaining
 Awaity.js provides three diffrent kinds of chaining to choose from:
 
-### By leveraging Promise's native chainig feature:
+### By leveraging Promise's native chaining feature:
 
 ```js
 
@@ -100,7 +100,7 @@ const postsWithComments = await Promise.resolve([1,2,3])
     })))
 ```
 
-#### native chainig feature +  `awaity/fp`:
+#### native chaining feature +  `awaity/fp`:
 
 ```js
 
@@ -112,6 +112,38 @@ const postsWithComments = await Promise.resolve([1,2,3])
       ...post,
       comments: await api.getCommentsByPostId(post.id)
     })))
+```
+
+### Using `flow`
+Flow is a utility to supprt 
+
+```js
+
+import { map, flow } from 'awaity';
+
+const postsWithComments = await flow([1,2,3], [
+    (ids) => map(ids, (id) => api.getPostById(id)),
+    (posts) => map(posts, async (post) => ({
+      ...post,
+      comments: await api.getCommentsByPostId(post.id)
+    }))
+]);
+```
+
+
+
+#### Using `flow` + `awaity/fp`
+```js
+
+import { map, flow } from 'awaity/fp';
+
+const postsWithComments = await flow([
+    map(ids, (id) => api.getPostById(id)),
+    map(posts, async (post) => ({
+      ...post,
+      comments: await api.getCommentsByPostId(post.id)
+    })
+], [1,2,3]);
 ```
 
 Complex example with promise chain
@@ -134,38 +166,6 @@ const posts = await Promise.resolve([1,2,3])
 
 ```
 
-### Using `flow`
-Flow is a utility to supprt 
-
-```js
-
-import { map, flow } from 'awaity';
-
-const postsWithComments = await flow([1,2,3], [
-    (ids) => map(ids, (id) => api.getPostById(id)),
-    (posts) => map(posts, async (post) => ({
-      ...post,
-      comments: await api.getCommentsByPostId(post.id)
-    }))
-]);
-```
-
-
-#### Using `flow` + `awaity/fp`
-```js
-
-import { map, flow } from 'awaity/fp';
-
-const postsWithComments = await flow([
-    map(ids, (id) => api.getPostById(id)),
-    map(posts, async (post) => ({
-      ...post,
-      comments: await api.getCommentsByPostId(post.id)
-    })
-], [1,2,3]);
-```
-
-
 Complex example with flow
 
 ```js
@@ -184,50 +184,6 @@ const posts = await flow([
     }), {})
 ], [1, 2, 3]);
 ```
-
-
-### Using `chain`:
-```js
-
-import { chain } from 'awaity/fp';
-
-const postsWithComments = await chain([1,2,3])
-  .map(ids, (id) => api.getPostById(id))
-  .map(posts, async (post) => ({
-    ...post,
-    comments: await api.getCommentsByPostId(post.id)
-  })
-  .promise()
-```
-
-#### Create your own chain:
-```js
-/* ./myChain.js */
-
-import { createChain, map, reduce } from 'awaity/fp';
-
-export default createChain({ map, reduce });
-```
-
-```js
-/* ./app.js */
-
-import chain from './myChain.js';
-
-const postsWithComments = await chain([1,2,3])
-  .map(id => api.getPostById(id))
-  .map(post => props({
-    ...post,
-    user: api.getUserById(post.userId),
-    comments: api.getCommentsByPostId(post.id),
-  }))
-  .reduce(async (results, post) => ({
-    ...results,
-    [post.id]: post
-  }), {})
-  .promise()
-```
-
 
 
 ## API
