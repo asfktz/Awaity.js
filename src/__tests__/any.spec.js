@@ -35,12 +35,14 @@ test('should throw if all promises fails', async () => {
   });
 
 
-  let error;
+  let subError;
   try {
     await any(promises);
-  } catch (_error) {
-    error = _error;
+  } catch (err) {
+    subError = err;
   }
 
-  expect(error.message.startsWith('SubError')).toBe(true);
+  const errors = subError.errors.map(({ message }) => message);
+  expect(subError.name).toBe('SubError');
+  expect(errors).toEqual(['3', '2', '0', '1', '4', '5']);
 });

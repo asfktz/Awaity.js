@@ -1,4 +1,5 @@
 import concurrent from './__internal__/concurrent';
+import { SubError } from './__internal__/errors';
 import { toArray, size } from './__internal__/utils';
 
 export default function some(iterable, total) {
@@ -14,7 +15,7 @@ export default function some(iterable, total) {
         const tooManyFails = (values.length - errors.length) <= total;
 
         if (tooManyFails) {
-          throws(errors[0]);
+          throws(new SubError(errors));
         } else if (size(resolved) === total) {
           done(toArray(resolved));
         }

@@ -1,15 +1,16 @@
 function customError(fn, BaseError) {
   BaseError = BaseError || Error;
 
-  function SubError() {
+  function CustomError() {
     // eslint-disable-next-line no-proto
-    const _this = SubError.__proto__.apply(this, arguments);
+    const _this = CustomError.__proto__.apply(this, arguments);
     Object.assign(_this, fn.apply(null, arguments));
     return _this;
   }
 
-  Object.setPrototypeOf(SubError, BaseError);
-  return SubError;
+  Object.setPrototypeOf(CustomError, BaseError);
+
+  return CustomError;
 }
 
 export const SubError = customError((errors) => {
@@ -21,6 +22,7 @@ export const SubError = customError((errors) => {
   return {
     name: 'SubError',
     message: 'SubError ' + multiStack,
+    errors: errors,
   };
 }, Error);
 

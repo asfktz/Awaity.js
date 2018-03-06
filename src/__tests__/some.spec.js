@@ -23,12 +23,14 @@ test('should take only the first two fulfilled promises', async () => {
     return `index ${i}`;
   });
 
-  let error;
+  let subError;
   try {
     await some(promises, 3);
-  } catch (_error) {
-    error = _error;
+  } catch (err) {
+    subError = err;
   }
 
-  expect(error.message).toBe('2');
+  const errors = subError.errors.map(({ message }) => message);
+  expect(subError.name).toBe('SubError');
+  expect(errors).toEqual(['2', '0', '1']);
 });
