@@ -1,6 +1,6 @@
 {
   "name": "awaity",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "A functional, lightweight alternative to bluebird.js, built with async / await in mind.",
   "main": "index.js",
   "repository": "https://github.com/asfktz/Awaity.js",
