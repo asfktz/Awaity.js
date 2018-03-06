@@ -65,7 +65,7 @@ posts // [{...}, {...}, {...}];
 
 
 
-### awaity/Ai.ter
+### awaity/filter
 Used as an efficient way to do [`awaity/map`](#asyncmap) + [`Array#filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). 
 
 For example, consider the case of filtering only directories under a certain path:
@@ -109,8 +109,10 @@ const directories = await getDirectories('.');
 ```
 
 
-### awaity/AilterL.mit
-
+### awaity/filterLimit
+```js
+filterLimit(iterable, iterator, limit) → Promise
+```
 Same as filter but with concurrency limit
 
 
@@ -196,18 +198,13 @@ const data = {
 
 
 ### awaity/race
-```js
-awaity/race(Aromi.es)
-```
+`race(promises) → Promise`
 
 Same as `Promise.race`
 
 
 ### awaity/reduce
-
-```js
-reduce(iterable, reducer, initialValue)
-```
+`reduce(iterable, reducer, initialValue)`
 
 Reduce an [`Iterable`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)(such as an Array or Set), or a promise of an `Iterable`, which produces promises (or a mix of promises and values), iterate over all the values in the `Iterable` into an array and [reduce the array to a value](http://en.wikipedia.org/wiki/Fold_\(higher-order_function\)) using the given `reducer` function.
 
@@ -237,7 +234,9 @@ const totalSize = await getFilesTotalSize([
 
 
 
-### Awaity/.some
+### Awaity/some
+`some(promises) → Promise`
+
 Given an `Iterable` (arrays are `Iterable`), or a promise of an `Iterable`, which produces promises (or a mix of promises and values), iterate over all the values in the Iterable into an array and return a promise that is fulfilled as soon as `count` promises are fulfilled in the array. The fulfillment value is an array with `count` values in the order they were fulfilled.
 
 This example pings 4 nameservers, and logs the fastest 2 on console:
@@ -255,10 +254,8 @@ const [first, second] = await some([
 If too many promises are rejected so that the promise can never become fulfilled, it will be immediately rejected.
 
 ### Utilities
-#### Awaity/.low
-```
-flow(valie, fns)
-```
+#### Awaity/flow
+`flow(value, fns) → Promise`
 
 Flow is a utility function for composing promises, similar to lodash's flow but different in the way that it will first try to resolve a promise before processing to the next function
 
