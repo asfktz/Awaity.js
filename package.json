@@ -1,6 +1,6 @@
 {
   "name": "awaity",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "A functional, lightweight alternative to bluebird.js, built with async / await in mind.",
   "main": "index.js",
   "repository": "https://github.com/asfktz/Awaity.js",
@@ -15,7 +15,11 @@
     "link": "node scripts/link",
     "pub": "node scripts/publish"
   },
-  "keywords": ["async-await", "promise", "utility library"],
+  "keywords": [
+    "async-await",
+    "promise",
+    "utility library"
+  ],
   "author": "Asaf Katz",
   "license": "MIT",
   "dependencies": {},
