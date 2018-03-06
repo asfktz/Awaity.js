@@ -23,6 +23,9 @@ const pkg = require('../../package.json');
   log.green('bumping version...');
   shell(`npm version ${version}`);
 
+  // FIX ME: Build is called again only to copy the version number /:
+  shell('npm run build');
+
   log.green(`publishing ${pkg.name}...`);
   shell('npm publish', { cwd: `./packages/${pkg.name}` });
 })();
