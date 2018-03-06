@@ -1,6 +1,6 @@
 {
   "name": "awaity",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "",
   "main": "index.js",
   "sideEffects": false,
