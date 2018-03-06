@@ -44,10 +44,6 @@ If the iterator function returns a promise or a thenable, then the result of the
 
 Resolves to the original array unmodified. This method is meant to be used for side effects.
 
-<dl>
-    <dt>object</dt>
-    <dd>Object of promises</dd>
-</dl>
 
 ```js
 import { each } from 'awaity-es';
@@ -66,6 +62,10 @@ posts // [{...}, {...}, {...}];
 
 
 ### awaity/filter
+```js
+filter(iterable, filterer) → Promise
+```
+
 Used as an efficient way to do [`awaity/map`](#asyncmap) + [`Array#filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). 
 
 For example, consider the case of filtering only directories under a certain path:
@@ -145,7 +145,9 @@ posts // [{...}, {...}, {...}];
 
 
 ### awaity/mapLimit
-`mapLimit(iterable, mapper, limit) → Promise`
+```js
+mapLimit(iterable, mapper, limit) → Promise
+```
 
 Same as map but with concurrency limit
 
@@ -160,14 +162,18 @@ const responses = await map(urls, async (url) => {
 
 
 ### awaity/mapSeries
-`mapSeries(iterable, mapper) → Promise`
+```js
+mapSeries(iterable, mapper) → Promise
+```
 
 Same as map but but serially, the iterator won't be called for an item until its previous item, and the promise returned by the iterator for that item are fulfilled.
 
 
 
 ### awaity/props
-`props(object) → Promise`
+```js
+props(object) → Promise
+```
 
 Resolves an *object* of promises concurrently.
 
@@ -198,13 +204,17 @@ const data = {
 
 
 ### awaity/race
-`race(promises) → Promise`
+```js
+race(promises) → Promise
+```
 
 Same as `Promise.race`
 
 
 ### awaity/reduce
-`reduce(iterable, reducer, initialValue)`
+```js
+reduce(iterable, reducer, initialValue)
+```
 
 Reduce an [`Iterable`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)(such as an Array or Set), or a promise of an `Iterable`, which produces promises (or a mix of promises and values), iterate over all the values in the `Iterable` into an array and [reduce the array to a value](http://en.wikipedia.org/wiki/Fold_\(higher-order_function\)) using the given `reducer` function.
 
@@ -235,7 +245,9 @@ const totalSize = await getFilesTotalSize([
 
 
 ### Awaity/some
-`some(promises) → Promise`
+```js
+some(promises) → Promise
+```
 
 Given an `Iterable` (arrays are `Iterable`), or a promise of an `Iterable`, which produces promises (or a mix of promises and values), iterate over all the values in the Iterable into an array and return a promise that is fulfilled as soon as `count` promises are fulfilled in the array. The fulfillment value is an array with `count` values in the order they were fulfilled.
 
@@ -255,7 +267,9 @@ If too many promises are rejected so that the promise can never become fulfilled
 
 ### Utilities
 #### Awaity/flow
-`flow(value, fns) → Promise`
+```js
+flow(value, fns) → Promise
+```
 
 Flow is a utility function for composing promises, similar to lodash's flow but different in the way that it will first try to resolve a promise before processing to the next function
 
