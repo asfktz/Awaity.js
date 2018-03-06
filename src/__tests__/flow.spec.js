@@ -1,7 +1,7 @@
 import flow from '../flow';
 import map from '../map';
 import reduce from '../reduce';
-import fp from './utils/fp';
+import { fp } from './utils/packages';
 
 test('should pass an array', async () => {
   await flow(Promise.resolve([1, 2, 3]), [
@@ -69,3 +69,4 @@ test('should work in FP mode', async function () {
 
   expect(ii).toBe('1!2!3!');
 });
+

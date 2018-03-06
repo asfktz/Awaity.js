@@ -23,29 +23,3 @@ test('should resolve filterer\'s promise', async () => {
   const nums = await filter([1, 2, 3], i => Promise.resolve(i % 2));
   expect(nums).toEqual([1, 3]);
 });
-
-test('Real World | should return a list of direcrories', async () => {
-  async function oldSchollGetDirectories(path) {
-    const files = await fs.readdir(path);
-    const pairs = await Promise.all(files.map(async (file) => {
-      const stats = await fs.stat(file);
-      return [stats.isDirectory(), file];
-    }));
-    return pairs
-      .filter(([isDirectory, file]) => isDirectory)
-      .map(([isDirectory, file]) => file);
-  }
-
-  async function getDirectories(path) {
-    const files = await fs.readdir(path);
-    return filter(files, async (filepath) => {
-      const stats = await fs.stat(filepath);
-      return stats.isDirectory();
-    });
-  }
-
-  const expected = await oldSchollGetDirectories('.');
-  const results = await getDirectories('.');
-
-  expect(results).toEqual(expected);
-});

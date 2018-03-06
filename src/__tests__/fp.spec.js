@@ -1,6 +1,5 @@
 import { curry, flip } from '../__internal__/fp';
-import fp from './utils/fp';
-import map from '../map';
+import { fp } from './utils/packages';
 
 test('should flip the last arg to be the first', () => {
   const fn = (a, b, c) => [a, b, c];
