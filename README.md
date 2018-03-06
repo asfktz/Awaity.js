@@ -27,7 +27,7 @@ That grealty reduce the library footprint, while blurbird's is 17KB min/gzip, Aw
 
 
 ```js
-import { map } from 'awaity-es';
+import { map } from 'awaity/esm';
 
 const tasks = map([1,2,3], async (id) => {
     const res = await fetch(id);
@@ -47,7 +47,7 @@ npm install awaity
 Or, with ES modules and tree shaking support
 
 ```bash
-npm install awaity-es
+npm install awaity/esm
 ```
 
 ## Usage
@@ -64,17 +64,17 @@ import reduce from 'awaity/reduce';
 import some from 'awaity/some';
 ```
 
-Or, If you'r using `awaity-es`, you can benefit from tree shaking.
+Or, If you'r using `awaity/esm`, you can benefit from tree shaking.
 
 ```js
-import { map, reduce, some } from 'awaity-es';
+import { map, reduce, some } from 'awaity/esm';
 ```
 
 
 FP flavor is available under the `fp` submodule:
 
 ```js
-import { reduce } from 'awaity-es/fp';
+import { reduce } from 'awaity/esm/fp';
 
 const sum = reduce((total, i) => total + i, 0);
 
@@ -169,7 +169,7 @@ const posts = await Promise.resolve([1,2,3])
 Complex example with flow
 
 ```js
-import { flow, map, reduce, props } from 'awaity-es/fp';
+import { flow, map, reduce, props } from 'awaity/esm/fp';
 
 const posts = await flow([
     map(id => api.getPostById(id)),
@@ -209,7 +209,7 @@ const posts = await flow([
 Each module also has an equivalate currird version under the `fp` namespace
 
 ```js
-import { reduce } from 'awaity-es/fp';
+import { reduce } from 'awaity/esm/fp';
 
 const sum =  reduce((total, i) => total + i, 0);
 
@@ -221,7 +221,7 @@ Note: in FP mode, the first argument (the iterable, or promises) is always the l
 ```js
 // Normal mode
 
-import { reduce, map, mapLimit } from 'awaity-es';
+import { reduce, map, mapLimit } from 'awaity/esm';
 
 reduce(iterable, reducer, initialValue);
 map(iterable, mapper);
@@ -229,7 +229,7 @@ mapLimit(iterable, mapper, limit);
 
 // FP mode
 
-import { reduce, map, mapLimit } from 'awaity-es/fp';
+import { reduce, map, mapLimit } from 'awaity/esm/fp';
 
 reduce(reducer, initialValue, iterable);
 map(mapper, iterable);

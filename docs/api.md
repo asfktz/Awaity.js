@@ -46,7 +46,7 @@ Resolves to the original array unmodified. This method is meant to be used for s
 
 
 ```js
-import { each } from 'awaity-es';
+import { each } from 'awaity/esm';
 
 let posts = [];
 await each([1,2,3], async (id) => {
@@ -179,7 +179,7 @@ Resolves an *object* of promises concurrently.
 
 
 ```js
-import { props } from 'awaity-es';
+import { props } from 'awaity/esm';
 
 const data = await props({
   posts: api.get('posts'),
@@ -253,7 +253,7 @@ Given an `Iterable` (arrays are `Iterable`), or a promise of an `Iterable`, whic
 
 This example pings 4 nameservers, and logs the fastest 2 on console:
 ```js
-import { some } from 'awaity-es';
+import { some } from 'awaity/esm';
 
 const [first, second] = await some([
     ping("ns1.example.com"),
@@ -274,7 +274,7 @@ flow(value, fns) → Promise
 Flow is a utility function for composing promises, similar to lodash's flow but different in the way that it will first try to resolve a promise before processing to the next function
 
 ```js
-import { flow, map, reduce } from 'awaity-es';
+import { flow, map, reduce } from 'awaity/esm';
 
 const postsById = await flow([1,2,3], [
   (ids) => map(ids, id => api.get('post', id)),
@@ -292,7 +292,7 @@ postsById // { 1: { ... }, 2: { ... }, 3: { ... } }
 flow truly shains with Awaity's FP mode, where each function is curried
 
 ```js
-import { flow, map, reduce } from 'awaity-es/fp';
+import { flow, map, reduce } from 'awaity/esm/fp';
 
 const posts = await flow([
     map(id => api.get('posts', id)),
