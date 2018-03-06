@@ -13,7 +13,7 @@ all(promises) → Promise
 Resolves an *Array* of promises. Same as `Promise.all`
 
 ```js
-import { all } from 'littlebird-es';
+import { all } from 'awaity-es';
 
 const promises = [1,2,3].map((i) => Promise.resolve(i + '!'));
 const array = await all(promises)
@@ -47,7 +47,7 @@ Resolves to the original array unmodified. This method is meant to be used for s
 </dl>
 
 ```js
-import { each } from 'littlebird-es';
+import { each } from 'awaity-es';
 
 let posts = [];
 await each([1,2,3], async (id) => {
@@ -63,37 +63,46 @@ posts // [{...}, {...}, {...}];
 
 
 ### Async.filter
+Used as an efficient why to do [`awaity/map`](#asyncmap) + [`Array#filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). 
 
-
-It is essentially an efficient shortcut for doing a [.map](.) and then [`Array#filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter):
-
-```js
-const pairs = await map(valuesToBeFiltered, (value, index, length) => {
-    return Promise.all([filterer(value, index, length), value]);
-})
-
-const filtered = pairs
-    .filter(([bool, value]) => bool)
-    .map(([bool, value]) => value)
-```
-
-Example for filtering only directories:
+For example, consider the case of filtering only directoris under a certain path:
 
 ```js
-import Async from 'littlebird-es';
+import filter from 'awaity/filter';
 import fs from 'fs-extra';
 
-const dirsOnly = await Async.filter(
-  fs.readdir(process.cwd()),
-  async (fileName) => {
-    const stat = await fs.statAsync(fileName)
-    return stat.isDirectory();
-  }
-);
+async function getDirectories(path) {
+  const files = await fs.readdir(path);
 
-dirsOnly.each(function(directoryName) {
-    console.log(directoryName, " is a directory");
-});
+  const pairs = await Promise.all(files.map(async (file) => {
+    const stats = await fs.stat(file);
+    return [stats.isDirectory(), file];
+  }));
+  
+  return pairs
+    .filter(([isDirectory, file]) => isDirectory)
+    .map(([isDirectory, file]) => file);
+}
+
+const directories = await getDirectories('.');
+```
+
+Using [`awaity/map`](#asyncfilter), with can achive the same more efficiently and with less builerplate:
+
+```js
+import filter from 'awaity/filter';
+import fs from 'fs-extra';
+
+async function getDirectories(path) {
+  const files = await fs.readdir(path);
+
+  return filter(files, async (file) => {
+    const stats = await fs.stat(file);
+    return stats.isDirectory();
+  });
+}
+
+const directories = await getDirectories('.');
 ```
 
 
@@ -118,7 +127,7 @@ The mapper function for a given item is called as soon as possible, that is, whe
 A common use of Promise.map is to replace the .push+Promise.all boilerplate:
 
 ```js
-import { map } from 'littlebird-es';
+import { map } from 'awaity-es';
 
 const posts = await map([1,2,3], async (id) => {
     const res = await fetch('/api/posts/' + id);
@@ -175,7 +184,7 @@ const data = {
 
 Resoved concurrently
 ```js
-import { props } from 'littlebird-es';
+import { props } from 'awaity-es';
 
 const data = await props({
   posts: api.get('posts'),
@@ -232,7 +241,7 @@ Given an `Iterable` (arrays are `Iterable`), or a promise of an `Iterable`, whic
 
 This example pings 4 nameservers, and logs the fastest 2 on console:
 ```js
-import { some } from 'littlebird-es';
+import { some } from 'awaity-es';
 
 const [first, second] = await some([
     ping("ns1.example.com"),
@@ -253,7 +262,7 @@ flow(valie, fns)
 Flow is a utility function for composing promises, similar to lodash's flow but different in the way that it will first try to resolve a promise before processing to the next function
 
 ```js
-import { flow, map, reduce } from 'littlebird-es';
+import { flow, map, reduce } from 'awaity-es';
 
 const postsById = await flow([1,2,3], [
   (ids) => map(ids, id => api.get('post', id)),
@@ -268,10 +277,10 @@ const postsById = await flow([1,2,3], [
 postsById // { 1: { ... }, 2: { ... }, 3: { ... } }
 ```
 
-flow truly shains with littlebird's FP mode, where each function is curried
+flow truly shains with Awaity's FP mode, where each function is curried
 
 ```js
-import { flow, map, reduce } from 'littlebird-es/fp';
+import { flow, map, reduce } from 'awaity-es/fp';
 
 const posts = await flow([
     map(id => api.get('posts', id)),
