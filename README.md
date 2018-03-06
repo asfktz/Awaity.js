@@ -8,15 +8,15 @@
 
 ## Features
 
-* <b>Functional utility library for `async` / `await` </b><br> Think `lodash` for promises.
+- **Functional utility library for `async` / `await`**<br> Think `lodash` for promises.
 
-* <b>Bluebird's powerful collections methods, built with native promises.</b><br> Use functions like `map`, `reduce`, `filter` & `some` to interate over promises in an intuitive way.
+- **Bluebird's powerful collections methods, built with native promises**<br> Use functions like `map`, `reduce`, `filter` & `some` to interate over promises in an intuitive way.
 
-* <b>Fine-grained Concurrency control</b><br> Resolve all promises at once or in series of 3? the choice is yours.
+- **Fine-grained Concurrency control**<br> Resolve all promises at once or in series of 3? the choice is yours.
 
-* <b>Built to support Tree Shaking from the ground up</b><br> Take what you need leave the rest.
+- **Built to support Tree Shaking from the ground up**<br> Take what you need leave the rest.
 
-* <b>Two flavors: Regular & FP style</b><br> Similar to `lodash/fp`, Awaity.js comes with additional flavor to support functional composition. <br> If it speaks your language, try `awaity/fp`.
+- **Two flavors: Regular & FP style**<br> Similar to `lodash/fp`, Awaity.js comes with additional flavor to support functional composition. <br> If it speaks your language, try `awaity/fp`.
 
 
 
