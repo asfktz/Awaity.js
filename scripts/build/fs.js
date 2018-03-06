@@ -6,6 +6,7 @@ const {
   emptyDir,
   writeJson,
   readJson,
+  copy,
 } = require('fs-extra');
 
 async function write(path, contents) {
@@ -19,4 +20,5 @@ module.exports = {
   emptyDir,
   writeJson,
   readJson,
+  copy
 };

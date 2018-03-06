@@ -1,7 +1,7 @@
 const util = require('util');
 const glob = util.promisify(require('glob'));
 const { join, relative } = require('path');
-const { emptyDir, write, writeJson, read } = require('./fs');
+const { emptyDir, write, writeJson, read, copy } = require('./fs');
 const log = require('../utils/log');
 const config = require('../../config');
 const pkgJSON = require('../../package.json');
@@ -50,6 +50,7 @@ async function build(pkgName, envOptions) {
   await emptyDir(basePath);
 
   await Promise.all([
+    copy('./README.md', join(basePath, './README.md')),
     savePkgJSON(pkgJSON, basePath, pkgName),
     buildBase(basePath, envOptions),
     buildFP(basePath, envOptions),
