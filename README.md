@@ -44,41 +44,66 @@ npm install awaity
 
 ```
 
-Or, with ES modules and tree shaking support
-
-```bash
-npm install awaity/esm
-```
-
 ## Usage
 
-```js
-import Async from 'awaity';
-```
-
-Take only what you need
 
 ```js
-import map from 'awaity/map';
+// Take all
+import * as Async from 'awaity';
+
+// Or only what you need
 import reduce from 'awaity/reduce';
 import some from 'awaity/some';
 ```
 
-Or, If you'r using `awaity/esm`, you can benefit from tree shaking.
+Or for module bundles (such as webpack, parcel, or rollup), use `awaity/esm`
+Which used ES Modules to gain tree shaking support:
 
 ```js
-import { map, reduce, some } from 'awaity/esm';
+import { map, reduce, sum } from 'awaity/esm';
+```
+
+Note: `node.js` does not support ES Modules out of the box yet.
+
+
+```js
+import fs from 'fs-extra';
+
+import filter from 'awaity/filter';
+// OR
+import { filter } from 'awaity/esm';
+
+
+async function getDirectories(path) {
+  const promise = fs.readdir(path);
+
+  return filter(promise, async (file) => {
+    const stats = await fs.stat(file);
+    return stats.isDirectory();
+  });
+}
+
+const directories = await getDirectories('.');
 ```
 
 
-FP flavor is available under the `fp` submodule:
+## FP flavor
+Todo: expain what it means.
 
+FP flavor is available under the `fp` submodule:
 ```js
+import reduce from 'awaity/fp/reduce';
+// OR
 import { reduce } from 'awaity/esm/fp';
 
+// Just some promises that returns numbers
+const promises = [1,2,3].map((i) => Promise.resolve(i));
+
+// By ommiting the last arguments,
+// we got a function that expects an array of promises
 const sum = reduce((total, i) => total + i, 0);
 
-const total = sum([1,2,3]);
+const total = await sum(promises) // 6
 ```
 
 
