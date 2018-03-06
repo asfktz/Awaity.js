@@ -189,18 +189,18 @@ const posts = await flow([
 ## API
 
 ### Collections
-* [all](/docs/api.md#asyncall)
-* [any](/docs/api.md#asyncany)
-* [each](/docs/api.md#asynceach)
-* [filter](/docs/api.md#asyncfilter)
-* [filterLimit](/docs/api.md#asyncfilterlimit)
-* [map](/docs/api.md#asyncmap)
-* [mapLimit](/docs/api.md#asyncmaplimit)
-* [mapSeries](/docs/api.md#asyncmapseries)
-* [props](/docs/api.md#asyncprops)
-* [race](/docs/api.md#asyncrace)
-* [reduce](/docs/api.md#asyncreduce)
-* [some](/docs/api.md#asyncsome)
+* [all](/docs/api.md#awaityall)
+* [any](/docs/api.md#awaityany)
+* [each](/docs/api.md#awaityeach)
+* [filter](/docs/api.md#awaityfilter)
+* [filterLimit](/docs/api.md#awaityfilterlimit)
+* [map](/docs/api.md#awaitymap)
+* [mapLimit](/docs/api.md#awaitymaplimit)
+* [mapSeries](/docs/api.md#awaitymapseries)
+* [props](/docs/api.md#awaityprops)
+* [race](/docs/api.md#awaityrace)
+* [reduce](/docs/api.md#awaityreduce)
+* [some](/docs/api.md#awaitysome)
 
 ### Utilities
 * [flow](/docs/api#flow)
