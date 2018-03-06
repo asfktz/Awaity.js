@@ -10,29 +10,32 @@ const preparePkgJSON = require('./preparePkgJSON');
 const transform = require('./transform');
 const { createIndexFile, createFPModule } = require('./generate');
 
-async function buildBase(targetPath, envOptions) {
+async function buildBase(basePath, envOptions) {
   const sources = await glob('./src/**/*.js', {
     ignore: './src/__tests__/**',
   });
 
+  const indexFile = createIndexFile(config.definitions);
+  await write(join(basePath, 'index.js'), transform(indexFile, envOptions));
+
   return Promise.all(sources.map(async (srcPath) => {
     const contents = await read(srcPath);
-    const path = join(targetPath, relative('./src', srcPath));
+    const path = join(basePath, relative('./src', srcPath));
     return write(path, transform(contents, envOptions));
   }));
 }
 
 async function buildFP(_basePath, envOptions) {
-  const baseBase = join(_basePath, 'fp');
+  const basePath = join(_basePath, 'fp');
 
   const indexFile = createIndexFile(config.definitions);
-  await write(join(baseBase, 'index.js'), transform(indexFile, envOptions));
+  await write(join(basePath, 'index.js'), transform(indexFile, envOptions));
 
   return Promise.all(config.definitions.map(async ([name, argLength]) => {
     const contents = createFPModule(name, argLength);
     const transformed = transform(contents, envOptions);
 
-    return write(join(baseBase, `${name}.js`), transformed);
+    return write(join(basePath, `${name}.js`), transformed);
   }));
 }
 
