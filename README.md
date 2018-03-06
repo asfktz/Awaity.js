@@ -1,4 +1,4 @@
-# ![Logo](https://raw.githubusercontent.com/asfktz/Awaity.js/master/media/test.png)
+# ![Logo](https://raw.githubusercontent.com/asfktz/Awaity.js/master/media/header.png)
 
 
 > A functional, lightweight alternative to bluebird.js, built with `async` / `await` in mind.
