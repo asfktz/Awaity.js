@@ -203,7 +203,7 @@ const posts = await flow([
 * [some](/docs/api.md#awaitysome)
 
 ### Utilities
-* [flow](/docs/api#flow)
+* [flow](/docs/api.md#awaityflow)
 
 ### FP Mode
 Each module also has an equivalate currird version under the `fp` namespace
