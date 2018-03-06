@@ -65,7 +65,7 @@ posts // [{...}, {...}, {...}];
 ### Async.filter
 Used as an efficient why to do [`awaity/map`](#asyncmap) + [`Array#filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). 
 
-For example, consider the case of filtering only directoris under a certain path:
+For example, consider the case of filtering only directories under a certain path:
 
 ```js
 import filter from 'awaity/filter';
@@ -94,9 +94,7 @@ import filter from 'awaity/filter';
 import fs from 'fs-extra';
 
 async function getDirectories(path) {
-  const files = await fs.readdir(path);
-
-  return filter(files, async (file) => {
+  return filter(fs.readdir(path), async (file) => {
     const stats = await fs.stat(file);
     return stats.isDirectory();
   });
