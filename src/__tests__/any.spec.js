@@ -6,7 +6,7 @@ test('should take only one winner', async () => {
     return wait(ms).then(() => `index ${i}`);
   });
 
-  const winner = await any(promises, 2);
+  const winner = await any(promises);
 
   expect(winner).toEqual('index 3');
 });
