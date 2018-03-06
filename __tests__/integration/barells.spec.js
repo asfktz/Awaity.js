@@ -4,8 +4,8 @@ import config from '../../config';
 
 import * as regular from '../../packages/awaity';
 import * as fp from '../../packages/awaity/fp';
-import * as regularES from '../../packages/awaity-es';
-import * as fpES from '../../packages/awaity-es/fp';
+import * as regularES from '../../packages/awaity/esm';
+import * as fpES from '../../packages/awaity/esm/fp';
 
 const regularCJS = require('../../packages/awaity');
 const fpCJS = require('../../packages/awaity/fp');

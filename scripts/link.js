@@ -1,11 +1,6 @@
 const shell = require('./utils/shell');
 const log = require('./utils/log');
-const { name } = require('../package.json');
+const pkg = require('../package.json');
 
-function link(pkgName) {
-  log.green(`linking ${pkgName}...`);
-  shell('npm link', { ctx: `./src/packages/${pkgName}` });
-}
-
-link(name);
-link(`${name}-es`);
+log.green(`linking ${pkg.name}...`);
+shell('npm link', { ctx: `./src/packages/${pkg.name}` });

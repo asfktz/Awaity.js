@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const shell = require('../utils/shell');
 const log = require('../utils/log');
-const { name } = require('../../package.json');
+const pkg = require('../../package.json');
 
 (async () => {
   const { version } = await inquirer.prompt({
@@ -23,9 +23,6 @@ const { name } = require('../../package.json');
   log.green('bumping version...');
   shell(`npm version ${version}`);
 
-  log.green(`publishing ${name}...`);
-  shell('npm publish', { cwd: `./packages/${name}` });
-
-  log.green(`publishing ${name}-es...`);
-  shell('npm publish', { cwd: `./packages/${name}-es` });
+  log.green(`publishing ${pkg.name}...`);
+  shell('npm publish', { cwd: `./packages/${pkg.name}` });
 })();

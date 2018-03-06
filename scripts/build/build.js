@@ -4,7 +4,7 @@ const { join, relative } = require('path');
 const { emptyDir, write, writeJson, read, copy } = require('./fs');
 const log = require('../utils/log');
 const config = require('../../config');
-const pkgJSON = require('../../package.json');
+const pkg = require('../../package.json');
 
 const preparePkgJSON = require('./preparePkgJSON');
 const transform = require('./transform');
@@ -25,9 +25,7 @@ async function buildBase(basePath, envOptions) {
   }));
 }
 
-async function buildFP(_basePath, envOptions) {
-  const basePath = join(_basePath, 'fp');
-
+async function buildFP(basePath, envOptions) {
   const indexFile = createIndexFile(config.definitions);
   await write(join(basePath, 'index.js'), transform(indexFile, envOptions));
 
@@ -39,29 +37,23 @@ async function buildFP(_basePath, envOptions) {
   }));
 }
 
-function savePkgJSON(pkgJSON, targetPath, pkgName) {
+function savePkgJSON(pkg, targetPath, pkgName) {
   const path = join(targetPath, './package.json');
-  const config = preparePkgJSON(pkgJSON, pkgName);
+  const config = preparePkgJSON(pkg, pkgName);
   return writeJson(path, config, { spaces: '  ' });
 }
 
-async function build(pkgName, envOptions) {
-  log.green(`building ${pkgName}...`);
-
-  const basePath = join(config.baseTarget, pkgName);
-
-  await emptyDir(basePath);
-
-  await Promise.all([
-    copy('./README.md', join(basePath, './README.md')),
-    savePkgJSON(pkgJSON, basePath, pkgName),
-    buildBase(basePath, envOptions),
-    buildFP(basePath, envOptions),
-  ]);
+async function build(basePath, pkgName, envOptions) {
+  await buildBase(basePath, envOptions);
+  await buildFP(join(basePath, 'fp'), envOptions);
 }
 
 module.exports = async function () {
-  const { name } = pkgJSON;
-  await build(`${name}-es`, { modules: false });
-  await build(`${name}`, { modules: 'commonjs' });
+  const basePath = join(config.baseTarget, `${pkg.name}`);
+
+  await emptyDir(basePath);
+  await build(basePath, { modules: 'commonjs' });
+  await build(join(basePath, 'esm'), { modules: false });
+  await savePkgJSON(pkg, basePath, pkg.name);
+  await copy('./README.md', join(basePath, './README.md'));
 };
