@@ -15,13 +15,13 @@ const { name } = require('../../package.json');
     ],
   });
 
+  shell('npm run build');
+
   log.green('running tests...');
   shell('npm test');
 
   log.green('bumping version...');
   shell(`npm version ${version}`);
-
-  shell('npm run build');
 
   log.green(`publishing ${name}...`);
   shell('npm publish', { cwd: `./packages/${name}` });

@@ -2,7 +2,8 @@
 
 import fs from 'fs-extra';
 import { join } from 'path';
-import { fp, regular } from '../utils/packages';
+import * as regular from '../../packages/awaity-es';
+import * as fp from '../../packages/awaity-es/fp';
 
 const basePath = join(__dirname, 'playground');
 
