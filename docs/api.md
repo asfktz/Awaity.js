@@ -5,7 +5,7 @@ Work in progress
 
 ## Collections
 
-### Async.all
+### awaity/all
 ```js
 all(promises) → Promise
 ```
@@ -13,7 +13,7 @@ all(promises) → Promise
 Resolves an *Array* of promises. Same as `Promise.all`
 
 ```js
-import { all } from 'awaity-es';
+import all from 'awaity/all';
 
 const promises = [1,2,3].map((i) => Promise.resolve(i + '!'));
 const array = await all(promises)
@@ -23,14 +23,17 @@ array // ['1!', '2!', '3!'];
 
 
 
-### Async.any
+### awaity/any
+```js
+any(promises) → Promise
+```
 
 Like `some`, with 1 as `count`. However, if the promise fulfills, the fulfillment value is not an array of 1 but the value directly.
 
 
 
 
-### Async.each
+### awaity/each
 ```js
 each(iterable, iterator) → Promise
 ```
@@ -62,7 +65,7 @@ posts // [{...}, {...}, {...}];
 
 
 
-### Async.filter
+### awaity/Ai.ter
 Used as an efficient way to do [`awaity/map`](#asyncmap) + [`Array#filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). 
 
 For example, consider the case of filtering only directories under a certain path:
@@ -106,15 +109,15 @@ const directories = await getDirectories('.');
 ```
 
 
-### Async.filterLimit
+### awaity/AilterL.mit
 
 Same as filter but with concurrency limit
 
 
 
-### Async.map
+### awaity/map
 ```js
-map(iterable, mapper)
+map(iterable, mapper) → Promise
 ```
 
 Given an `Iterable`(arrays are Iterable), or a promise of an `Iterable`, which produces promises (or a mix of promises and values), iterate over all the values in the `Iterable` into an array and map the array to another using the given `mapper` function.
@@ -126,7 +129,7 @@ The mapper function for a given item is called as soon as possible, that is, whe
 A common use of Promise.map is to replace the .push+Promise.all boilerplate:
 
 ```js
-import { map } from 'awaity-es';
+import map from 'awaity/map';
 
 const posts = await map([1,2,3], async (id) => {
     const res = await fetch('/api/posts/' + id);
@@ -139,8 +142,8 @@ posts // [{...}, {...}, {...}];
 
 
 
-### Async.mapLimit
-`map(iterable, mapper, limit)`
+### awaity/mapLimit
+`mapLimit(iterable, mapper, limit) → Promise`
 
 Same as map but with concurrency limit
 
@@ -154,34 +157,19 @@ const responses = await map(urls, async (url) => {
 ```
 
 
+### awaity/mapSeries
+`mapSeries(iterable, mapper) → Promise`
 
-### Async.mapSeries
 Same as map but but serially, the iterator won't be called for an item until its previous item, and the promise returned by the iterator for that item are fulfilled.
 
 
 
-### Async.props
-Resolves an *object* of promises
-
+### awaity/props
 `props(object) → Promise`
 
-<dl>
-    <dt>object</dt>
-    <dd>Object of promises</dd>
-</dl>
+Resolves an *object* of promises concurrently.
 
 
-Resoved one at a time
-```js
-const data = {
-  posts: await api.get('posts'),
-  comments: await api.get('comments'),
-  authors: await api.get('authors'),
-}
-```
-
-
-Resoved concurrently
 ```js
 import { props } from 'awaity-es';
 
@@ -196,46 +184,60 @@ data.comments // [...]
 data.posts // [...]
 ```
 
-
-
-
-### Async.race
+That is in constust of using the following syntax, which resoled serially:
 ```js
-Async.race(promises)
+const data = {
+  posts: await api.get('posts'),
+  comments: await api.get('comments'),
+  authors: await api.get('authors'),
+}
+```
+
+
+
+### awaity/race
+```js
+awaity/race(Aromi.es)
 ```
 
 Same as `Promise.race`
 
 
-### Async.reduce
+### awaity/reduce
 
 ```js
 reduce(iterable, reducer, initialValue)
 ```
 
-Given an [`Iterable`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)\(arrays are `Iterable`\), or a promise of an `Iterable`, which produces promises (or a mix of promises and values), iterate over all the values in the `Iterable` into an array and [reduce the array to a value](http://en.wikipedia.org/wiki/Fold_\(higher-order_function\)) using the given `reducer` function.
+Reduce an [`Iterable`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)(such as an Array or Set), or a promise of an `Iterable`, which produces promises (or a mix of promises and values), iterate over all the values in the `Iterable` into an array and [reduce the array to a value](http://en.wikipedia.org/wiki/Fold_\(higher-order_function\)) using the given `reducer` function.
 
 If the reducer function returns a promise, then the result of the promise is awaited, before continuing with next iteration. If any promise in the array is rejected or a promise returned by the reducer function is rejected, the result is rejected as well.
 
-Read given files sequentially while summing their contents as an integer. Each file contains just the text `10`.
+For example, here we sum the total size of all the given files:
 
 ```js
-Promise.reduce(["file1.txt", "file2.txt", "file3.txt"], function(total, fileName) {
-    return fs.readFileAsync(fileName, "utf8").then(function(contents) {
-        return total + parseInt(contents, 10);
-    });
-}, 0).then(function(total) {
-    //Total is 30
-});
+const reduce = 'awaity/reduce';
+const fs = 'fs-extra';
+
+function getFilesTotalSize (paths) {
+  return await reduce(paths, async (total, fileName) => {
+      const stat = await fs.stat(fileName, 'utf8');
+      return total + stat.size;
+  }, 0);  
+}
+
+const totalSize = await getFilesTotalSize([
+  "file1.txt",
+  "file2.txt",
+  "file3.txt"
+]);
+
 ```
 
-*If `initialValue` is `undefined` (or a promise that resolves to `undefined`) and the iterable contains only 1 item, the callback will not be called and the iterable's single item is returned. If the iterable is empty, the callback will not be called and `initialValue` is returned (which may be `undefined`).*
-
-`Promise.reduce` will start calling the reducer as soon as possible, this is why you might want to use it over `Promise.all` (which awaits for the entire array before you can call [`Array#reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) on it).
 
 
 
-### Async.some
+### Awaity/.some
 Given an `Iterable` (arrays are `Iterable`), or a promise of an `Iterable`, which produces promises (or a mix of promises and values), iterate over all the values in the Iterable into an array and return a promise that is fulfilled as soon as `count` promises are fulfilled in the array. The fulfillment value is an array with `count` values in the order they were fulfilled.
 
 This example pings 4 nameservers, and logs the fastest 2 on console:
@@ -253,7 +255,7 @@ const [first, second] = await some([
 If too many promises are rejected so that the promise can never become fulfilled, it will be immediately rejected.
 
 ### Utilities
-#### Async.flow
+#### Awaity/.low
 ```
 flow(valie, fns)
 ```
