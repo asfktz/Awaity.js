@@ -29,7 +29,7 @@ That grealty reduce the library footprint, while blurbird's is 17KB min/gzip, Aw
 ```js
 import { map } from 'awaity/esm';
 
-const tasks = map([1,2,3], async (id) => {
+const tasks = await map([1,2,3], async (id) => {
     const res = await fetch(id);
     return res.json();
 });
