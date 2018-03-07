@@ -125,7 +125,7 @@ const postsWithComments = await Promise.resolve([1,2,3])
     })))
 ```
 
-#### native chaining feature +  `awaity/fp`:
+#### Promise chaining +  `awaity/fp`:
 
 ```js
 
