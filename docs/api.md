@@ -192,7 +192,7 @@ data.comments // [...]
 data.posts // [...]
 ```
 
-That is in constust of using the following syntax, which resoled serially:
+In constust of using the following syntax, which resolved serially:
 ```js
 const data = {
   posts: await api.get('posts'),
