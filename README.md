@@ -10,7 +10,7 @@
 
 - **Functional utility library for `async` / `await`**<br> Think `lodash` for promises.
 
-- **Bluebird's powerful collections methods, built with native promises**<br> Use functions like `map`, `reduce`, `filter` & `some` to interate over promises in an intuitive way.
+- **Bluebird's powerful collections methods, built with native promises**<br> Use functions like `map`, `reduce`, `filter` & `some` to iterate over promises in an intuitive way.
 
 - **Fine-grained Concurrency control**<br> Resolve all promises at once or in series of 3? the choice is yours.
 
