@@ -43,7 +43,7 @@ async fetchTodo  () { /* resolves a single todo     */ }
 const promise = fetchTodos(); 
 const titles = await map(promise, (todo) => todo.id);
 
-// Or and array of a promises
+// or and array of a promises
 const promises = [fetchTodo(1), fetchTodo(2), fetchTodo(3)];
 const titles = await map(promises, (item) => item.title);
 ```
