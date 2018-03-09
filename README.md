@@ -263,7 +263,7 @@ reduce(iterable, reducer, initialValue);
 map(iterable, mapper);
 mapLimit(iterable, mapper, limit);
 
-// FP mode
+// FP mode, note that the value is the last argument
 
 import { reduce, map, mapLimit } from 'awaity/esm/fp';
 
