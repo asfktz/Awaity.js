@@ -263,6 +263,12 @@ Each module also has an equivalate currird version under the `fp` namespace
 ```js
 import { reduce } from 'awaity/esm/fp';
 
+// FP version is curried
+reduce(reducer, initialValue, iterator)
+reduce(reducer, initialValue)(iterator)
+reduce(reducer)(initialValue)(iterator)
+
+
 const sum =  reduce((total, i) => total + i, 0);
 
 const total = await sum(promises);
@@ -271,19 +277,10 @@ const total = await sum(promises);
 Note: in FP mode, the first argument (the iterable, or promises) is always the last argument.
 
 ```js
-// Normal mode
 
-import { reduce, map, mapLimit } from 'awaity/esm';
-
+// Noraml Mode: value is the first argument
 reduce(iterable, reducer, initialValue);
-map(iterable, mapper);
-mapLimit(iterable, mapper, limit);
 
-// FP mode, note that the value is the last argument
-
-import { reduce, map, mapLimit } from 'awaity/esm/fp';
-
+// FP Mode: value is the last argument
 reduce(reducer, initialValue, iterable);
-map(mapper, iterable);
-mapLimit(mapper, limit, iterable);
 ```
