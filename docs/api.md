@@ -223,8 +223,8 @@ If the reducer function returns a promise, then the result of the promise is awa
 For example, here we sum the total size of all the given files:
 
 ```js
-const reduce = 'awaity/reduce';
-const fs = 'fs-extra';
+import reduce from 'awaity/reduce';
+import fs from 'fs-extra';
 
 function getFilesTotalSize (paths) {
   return await reduce(paths, async (total, fileName) => {
