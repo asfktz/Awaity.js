@@ -99,11 +99,7 @@ Note: `node.js` does not support ES Modules out of the box yet.
 
 ```js
 import fs from 'fs-extra';
-
 import filter from 'awaity/filter';
-// OR
-import { filter } from 'awaity/esm';
-
 
 async function getDirectories(path) {
   const promise = fs.readdir(path);
