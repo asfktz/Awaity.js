@@ -35,7 +35,19 @@ const tasks = await map([1,2,3], async (id) => {
 });
 
 tasks // [{...}, {...}, {...}]
+
+async fetchTodos () { /* resolves an array of todos */ }
+async fetchTodo  () { /* resolves a single todo     */ }
+
+// resolve a promise first
+const promise = fetchTodos(); 
+const titles = await map(promise, (todo) => todo.id);
+
+// Or and array of a promises
+const promises = [fetchTodo(1), fetchTodo(2), fetchTodo(3)];
+const titles = await map(promises, (item) => item.title);
 ```
+
 
 
 ## Installation
