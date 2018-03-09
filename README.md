@@ -26,25 +26,45 @@ Awaity.js is a subset of bluebird.js that focuses only on whats relevant for `as
 That greatly reduce the library footprint, while blurbird's is 17KB min/gzip, Awaity.js takes only 2KB for the whole lib, and since it built to support [tree&nbsp;shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) from the ground up, you can easily pick only whats relevant to you and end up with no more than 1KB.
 
 ```js
-import { map } from 'awaity/esm';
+import { map, props } from 'awaity/esm';
 
 const tasks = await map([1,2,3], async (id) => {
     const res = await fetch(id);
     return res.json();
 });
 
-tasks // [{...}, {...}, {...}]
+console.log(tasks) // [{...}, {...}, {...}]
 
-async fetchTodos () { /* resolves an array of todos */ }
-async fetchTodo  () { /* resolves a single todo     */ }
 
-// resolve a promise first
-const promise = fetchTodos(); 
-const titles = await map(promise, (todo) => todo.id);
+// Resolve a promise first
+const promise = api.getTasks();
+const titles  = await map(promise, (task) => task.title);
 
-// or and array of a promises
-const promises = [fetchTodo(1), fetchTodo(2), fetchTodo(3)];
-const titles = await map(promises, (item) => item.title);
+// Resolve an array of a promises 
+const promisesArray = [ api.getTask(1), api.getTask(2), api.getTask(3)];
+const titles = await map(promisesArray, (task) => task.title);
+
+// Resolve an array of a promises + map an object of promises for each
+const expendedTasks = await map(promisesArray, (task) => props({
+    ...task,
+    author: api.getUser(task.authorId),
+    comments: api.getCommentsByTask(task.id)
+}));
+
+console.log(expendedTasks)
+/*
+[
+    {
+        id: 1,
+        title: 'Task title..',
+        author: { ... },
+        comments: [{ ... }, { ... }, { ... }]
+    },
+    { ... },
+    { ... },
+    { ... }
+]
+*/
 ```
 
 
