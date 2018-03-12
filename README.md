@@ -10,32 +10,63 @@
 
 - **Functional utility library for `async` / `await`**<br> Think `lodash` for promises.
 
-- **Bluebird's powerful collections methods, built with native promises**<br> Use functions like `map`, `reduce`, `filter` & `some` to interate over promises in an intuitive way.
+- **Bluebird's powerful collections methods, built with native promises**<br> Use functions like `map`, `reduce`, `filter` & `some` to iterate over promises in an intuitive way.
 
 - **Fine-grained Concurrency control**<br> Resolve all promises at once or in series of 3? the choice is yours.
 
-- **Built to support Tree Shaking from the ground up**<br> Take what you need leave the rest.
+- **Built to support Tree Shaking from the ground up**<br> Take what you need and leave the rest.
 
 - **Two flavors: Regular & FP style**<br> Similar to `lodash/fp`, Awaity.js comes with additional flavor to support functional composition. <br> If it speaks your language, try `awaity/fp`.
 
 
 
 ## Introduction
-Awaity.js is a subset of bluebird.js that focuses only on whats relevant for `async` / `await` while using native promises instead, the result is a functional utilty library with minimal footprint. much like lodash, but for promises.
+Awaity.js is a subset of bluebird.js that focuses only on whats relevant for `async` / `await` while using native promises instead, the result is a functional utility library with a minimal footprint. much like lodash, but for promises.
 
-That grealty reduce the library footprint, while blurbird's is 17KB min/gzip, Awaity.js takes only 2KB for the whole lib, and since it built to support [tree&nbsp;shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) from the ground up, you can easly pick only whats relevent to you and end up with no more than 0.5KB.
-
+That greatly reduces the library footprint, while bluebird's is 17KB min/gzip, Awaity.js takes only 2KB for the whole lib, and since it built to support [tree&nbsp;shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) from the ground up, you can easily pick only whats relevant to you and end up with no more than 1KB.
 
 ```js
-import { map } from 'awaity/esm';
+import { map, props } from 'awaity/esm';
 
 const tasks = await map([1,2,3], async (id) => {
     const res = await fetch(id);
     return res.json();
 });
 
-tasks // [{...}, {...}, {...}]
+console.log(tasks) // [{...}, {...}, {...}]
+
+
+// Resolve a promise first
+const promise = api.getTasks();
+const titles  = await map(promise, (task) => task.title);
+
+// Resolve an array of a promises 
+const promisesArray = [ api.getTask(1), api.getTask(2), api.getTask(3)];
+const titles = await map(promisesArray, (task) => task.title);
+
+// Resolve an array of a promises + map an object of promises for each
+const expendedTasks = await map(promisesArray, (task) => props({
+    ...task,
+    author: api.getUser(task.authorId),
+    comments: api.getCommentsByTask(task.id)
+}));
+
+console.log(expendedTasks)
+/*
+[
+    {
+        id: 1,
+        title: 'Task title..',
+        author: { ... },
+        comments: [{ ... }, { ... }, { ... }]
+    },
+    { ... },
+    { ... },
+    { ... }
+]
+*/
 ```
+
 
 
 ## Installation
@@ -68,11 +99,7 @@ Note: `node.js` does not support ES Modules out of the box yet.
 
 ```js
 import fs from 'fs-extra';
-
 import filter from 'awaity/filter';
-// OR
-import { filter } from 'awaity/esm';
-
 
 async function getDirectories(path) {
   const promise = fs.readdir(path);
@@ -88,7 +115,7 @@ const directories = await getDirectories('.');
 
 
 ## FP flavor
-Todo: expain what it means.
+Todo: explain what it means.
 
 FP flavor is available under the `fp` submodule:
 ```js
@@ -231,10 +258,16 @@ const posts = await flow([
 * [flow](/docs/api.md#awaityflow)
 
 ### FP Mode
-Each module also has an equivalate currird version under the `fp` namespace
+Each module also has an equivalate curried version under the `fp` namespace
 
 ```js
 import { reduce } from 'awaity/esm/fp';
+
+// FP version is curried
+reduce(reducer, initialValue, iterator)
+reduce(reducer, initialValue)(iterator)
+reduce(reducer)(initialValue)(iterator)
+
 
 const sum =  reduce((total, i) => total + i, 0);
 
@@ -244,19 +277,10 @@ const total = await sum(promises);
 Note: in FP mode, the first argument (the iterable, or promises) is always the last argument.
 
 ```js
-// Normal mode
 
-import { reduce, map, mapLimit } from 'awaity/esm';
-
+// Noraml Mode: value is the first argument
 reduce(iterable, reducer, initialValue);
-map(iterable, mapper);
-mapLimit(iterable, mapper, limit);
 
-// FP mode
-
-import { reduce, map, mapLimit } from 'awaity/esm/fp';
-
+// FP Mode: value is the last argument
 reduce(reducer, initialValue, iterable);
-map(mapper, iterable);
-mapLimit(mapper, limit, iterable);
 ```
