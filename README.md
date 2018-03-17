@@ -167,7 +167,6 @@ const postsWithComments = await Promise.resolve([1,2,3])
 ```
 
 ### Using `flow`
-Flow is a utility to support 
 
 ```js
 
