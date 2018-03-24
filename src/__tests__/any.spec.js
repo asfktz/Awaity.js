@@ -46,3 +46,18 @@ test('should throw if all promises fails', async () => {
   expect(subError.name).toBe('SubError');
   expect(errors).toEqual(['3', '2', '0', '1', '4', '5']);
 });
+
+
+test('should pick the first one if all promises resolves immediately', async () => {
+  const promises = [
+    Promise.resolve(0),
+    Promise.reject(1),
+    Promise.resolve(2)
+  ];
+
+  const winner = await any(promises);
+
+  expect(winner).toBe(0);
+});
+
+

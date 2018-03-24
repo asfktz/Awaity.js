@@ -31,5 +31,8 @@ export function isIterable(iterable) {
   return iterable && typeof iterable.entries === 'function';
 }
 
-
 export function noop() {}
+
+export function isDefined(val) {
+  return val !== undefined;
+}
