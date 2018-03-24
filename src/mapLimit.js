@@ -1,5 +1,5 @@
 import concurrent from './__internal__/concurrent';
-import resolveIterable from './__internal__/resolveAll';
+import resolveAll from './__internal__/resolveAll';
 import { toArray, identity } from './__internal__/utils';
 import map from './map';
 
@@ -10,7 +10,7 @@ export default function mapLimit(iterable, mapper = identity, limit) {
     return map(iterable, mapper);
   }
 
-  return resolveIterable(iterable)
+  return resolveAll(iterable)
     .then(concurrent({
       limit: limit,
       breakOnError: true,
