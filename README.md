@@ -21,9 +21,9 @@
 
 
 ## Introduction
-Awaity.js is a subset of bluebird.js that focuses only on whats relevant for `async` / `await` while using native promises instead, the result is a functional utility library with a minimal footprint. much like lodash, but for promises.
+Awaity.js is a subset of bluebird.js that focuses only on what's relevant for `async` / `await` while using native promises instead, the result is a functional utility library with a minimal footprint. much like lodash, but for promises.
 
-That greatly reduces the library footprint, while bluebird's is 17KB min/gzip, Awaity.js takes only 2KB for the whole lib, and since it built to support [tree&nbsp;shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) from the ground up, you can easily pick only whats relevant to you and end up with no more than 1KB.
+That greatly reduces the library footprint, while bluebird's is 17KB min/gzip, Awaity.js takes only 2KB for the whole lib, and since it built to support [tree&nbsp;shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) from the ground up, you can easily pick only what's relevant to you and end up with no more than 1KB.
 
 ```js
 import { map, props } from 'awaity/esm';
@@ -136,7 +136,7 @@ const total = await sum(promises) // 6
 
 
 ### Chaining
-Awaity.js provides three diffrent kinds of chaining to choose from:
+Awaity.js provides three different kinds of chaining to choose from:
 
 ### By leveraging Promise's native chaining feature:
 
@@ -167,7 +167,6 @@ const postsWithComments = await Promise.resolve([1,2,3])
 ```
 
 ### Using `flow`
-Flow is a utility to supprt 
 
 ```js
 
@@ -278,7 +277,7 @@ Note: in FP mode, the first argument (the iterable, or promises) is always the l
 
 ```js
 
-// Noraml Mode: value is the first argument
+// Normal Mode: value is the first argument
 reduce(iterable, reducer, initialValue);
 
 // FP Mode: value is the last argument
