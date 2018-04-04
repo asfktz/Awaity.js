@@ -1,9 +1,10 @@
 const inquirer = require('inquirer');
 const shell = require('../utils/shell');
+const run = require('../utils/run');
 const log = require('../utils/log');
 const pkg = require('../../package.json');
 
-(async () => {
+run(async () => {
   const { version } = await inquirer.prompt({
     type: 'list',
     name: 'version',
@@ -28,4 +29,4 @@ const pkg = require('../../package.json');
 
   log.green(`publishing ${pkg.name}...`);
   shell('npm publish', { cwd: `./packages/${pkg.name}` });
-})();
+});
