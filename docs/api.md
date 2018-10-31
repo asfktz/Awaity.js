@@ -289,7 +289,7 @@ const postsById = await flow([1,2,3], [
 postsById // { 1: { ... }, 2: { ... }, 3: { ... } }
 ```
 
-`awaity/flow` truly chains with Awaity's FP mode, where each function is curried
+`awaity/flow` truly shines with Awaity's FP mode, where each function is curried
 
 ```js
 import { flow, map, reduce } from 'awaity/esm/fp';
