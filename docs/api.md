@@ -10,7 +10,7 @@ Work in progress
 all(promises) → Promise
 ```
 
-Resolves an *Array* of promises. Same as `Promise.all`
+Resolves an *Array* of promises. Same as [`Promise.all`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all).
 
 ```js
 import all from 'awaity/all';
@@ -28,7 +28,7 @@ array // ['1!', '2!', '3!'];
 any(promises) → Promise
 ```
 
-Like `some`, with 1 as `count`. However, if the promise fulfills, the fulfillment value is not an array of 1 but the value directly.
+Like [`awaity/some`](#awaitysome), with 1 as `count`. However, if the promise fulfills, the fulfillment value is not an array of 1 but the value directly.
 
 
 
@@ -66,7 +66,7 @@ posts // [{...}, {...}, {...}];
 filter(iterable, filterer) → Promise
 ```
 
-Used as an efficient way to do [`awaity/map`](#asyncmap) + [`Array#filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). 
+Used as an efficient way to do [`awaity/map`](#awaitymap) + [`Array#filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). 
 
 For example, consider the case of filtering only directories under a certain path:
 
@@ -90,7 +90,7 @@ async function getDirectories(path) {
 const directories = await getDirectories('.');
 ```
 
-Using [`awaity/map`](#asyncfilter), with can achive the same more efficiently and with less builerplate:
+Using `awaity/filter`, you can achieve the same more efficiently and with less boilerplate:
 
 ```js
 import filter from 'awaity/filter';
@@ -113,7 +113,7 @@ const directories = await getDirectories('.');
 ```js
 filterLimit(iterable, iterator, limit) → Promise
 ```
-Same as filter but with concurrency limit
+Same as filter but with concurrency limit.
 
 
 
@@ -128,7 +128,7 @@ Promises returned by the `mapper` function are awaited for and the returned prom
 
 The mapper function for a given item is called as soon as possible, that is, when the promise for that item's index in the input array is fulfilled. This doesn't mean that the result array has items in random order, it means that `.map` can be used for concurrency coordination unlike `.all`.
 
-A common use of Promise.map is to replace the .push+Promise.all boilerplate:
+A common use of `awaity/map` is to replace the `Array#push` + `Promise.all` boilerplate:
 
 ```js
 import map from 'awaity/map';
@@ -208,7 +208,7 @@ const data = {
 race(promises) → Promise
 ```
 
-Same as `Promise.race`
+Same as [`Promise.race`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race).
 
 
 ### awaity/reduce
@@ -244,7 +244,7 @@ const totalSize = await getFilesTotalSize([
 
 
 
-### Awaity/some
+### awaity/some
 ```js
 some(promises) → Promise
 ```
@@ -266,12 +266,12 @@ const [first, second] = await some([
 If too many promises are rejected so that the promise can never become fulfilled, it will be immediately rejected.
 
 ### Utilities
-#### Awaity/flow
+#### awaity/flow
 ```js
 flow(value, fns) → Promise
 ```
 
-Flow is a utility function for composing promises, similar to lodash's flow but different in the way that it will first try to resolve a promise before processing to the next function
+`awaity/flow` is a utility function for composing promises, similar to lodash's flow but different in the way that it will first try to resolve a promise before processing to the next function.
 
 ```js
 import { flow, map, reduce } from 'awaity/esm';
@@ -289,7 +289,7 @@ const postsById = await flow([1,2,3], [
 postsById // { 1: { ... }, 2: { ... }, 3: { ... } }
 ```
 
-flow truly shains with Awaity's FP mode, where each function is curried
+`awaity/flow` truly chains with Awaity's FP mode, where each function is curried
 
 ```js
 import { flow, map, reduce } from 'awaity/esm/fp';
